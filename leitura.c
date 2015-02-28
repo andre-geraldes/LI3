@@ -39,7 +39,7 @@ void leitura (char * nome_fich) {
 				token = strtok(NULL, " ");
 				compra[i] = token;
 			}
-			compra[5][strlen(compra[5])-2] = '\0';
+			//compra[5][strlen(compra[5])-2] = '\0';
 			preco = strtod(compra[1], &compra[1]);
 			nr = atoi(compra[2]);
 			mes = atoi(compra[5]);
@@ -56,6 +56,6 @@ void leitura (char * nome_fich) {
 
 int main (){
 	
-	leitura("Compras.txt");
+	leitura("FichClientes.txt");
 	return 0;
 }
