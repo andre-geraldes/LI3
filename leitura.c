@@ -2,6 +2,13 @@
 #include <string.h>
 #include <stdlib.h>
 
+int linha_valida (char ** c, double p, int n, int m){
+	//Validar Cliente e produto
+	if ((p > 0.0) && (n > 0) && (!strcmp(c[3],"N") || !strcmp(c[3],"P")) && ((m >= 1) || (m <= 12))) {
+		return 1;
+	}
+	else return 0;
+}
 
 void leitura (char * nome_fich) {
 	FILE * ficheiro;
@@ -12,6 +19,7 @@ void leitura (char * nome_fich) {
 	char limit[2] = " ";
 
 	int linhas = 0;
+	int linhas_val = 0;
 	int i = 0;
 	int nr;
 	int mes;
@@ -26,11 +34,13 @@ void leitura (char * nome_fich) {
 			token = strtok(string, limit);
 			token[strlen(token)-2] = '\0';
 			printf("Cliente: %s \n",token);
+			linhas_val++;
 		}
 		else if (!strcmp(nome_fich, "FichProdutos.txt")){
 			token = strtok(string, limit);
 			token[strlen(token)-2] = '\0';
 			printf("Produto: %s \n",token);
+			linhas_val++;
 		}
 		else if (!strcmp(nome_fich, "Compras.txt")){
 			token = strtok(string, limit);
@@ -40,22 +50,26 @@ void leitura (char * nome_fich) {
 				compra[i] = token;
 			}
 			//compra[5][strlen(compra[5])-2] = '\0';
+			
 			preco = strtod(compra[1], &compra[1]);
 			nr = atoi(compra[2]);
 			mes = atoi(compra[5]);
-			printf("Produto: %s Preço: %f Nr comprados: %d Tipo: %s Cliente: %s Mes: %d\n", compra[0], preco, nr, compra[3], compra[4], mes);
+			if (linha_valida(compra, preco, nr, mes)){
+				linhas_val++;
+				printf("Produto: %s Preço: %f Nr comprados: %d Tipo: %s Cliente: %s Mes: %d\n", compra[0], preco, nr, compra[3], compra[4], mes);
+			}
 		}
 
 
 		token = strtok(NULL, limit);
 	}
-	printf("Ficheiro lido: %s , número de linhas lidas: %d\n", nome_fich, linhas);
+	printf("Ficheiro lido: %s , número de linhas lidas: %d , nr de linhas válidas: %d\n", nome_fich, linhas, linhas_val);
 
 }
 
 
 int main (){
 	
-	leitura("FichClientes.txt");
+	leitura("Compras.txt");
 	return 0;
 }
