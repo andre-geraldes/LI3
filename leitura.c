@@ -63,8 +63,10 @@ void leitura (char * nome_fich) {
 
 		token = strtok(NULL, limit);
 	}
-	printf("Ficheiro lido: %s , número de linhas lidas: %d , nr de linhas válidas: %d\n", nome_fich, linhas, linhas_val);
-
+	printf("Ficheiro lido: %s\nNúmero de linhas lidas: %d\nNúmero de linhas válidas: %d\n", nome_fich, linhas, linhas_val);
+	free(str);
+	free(string);
+	fclose(ficheiro);
 }
 
 
