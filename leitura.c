@@ -13,6 +13,9 @@ void leitura (char * nome_fich) {
 
 	int linhas = 0;
 	int i = 0;
+	int nr;
+	int mes;
+	double preco;
 	char * compra[6];
 
 	ficheiro = fopen(nome_fich, "r");
@@ -22,12 +25,12 @@ void leitura (char * nome_fich) {
 		if (!strcmp(nome_fich, "FichClientes.txt")){
 			token = strtok(string, limit);
 			token[strlen(token)-2] = '\0';
-			printf("Token: |%s| \n",token);
+			printf("Cliente: %s \n",token);
 		}
 		else if (!strcmp(nome_fich, "FichProdutos.txt")){
 			token = strtok(string, limit);
 			token[strlen(token)-2] = '\0';
-			printf("Token: |%s| \n",token);
+			printf("Produto: %s \n",token);
 		}
 		else if (!strcmp(nome_fich, "Compras.txt")){
 			token = strtok(string, limit);
@@ -37,7 +40,10 @@ void leitura (char * nome_fich) {
 				compra[i] = token;
 			}
 			compra[5][strlen(compra[5])-2] = '\0';
-			printf("Produto: %s Preço: %s Nr comprados: %s Tipo: %s Cliente: %s Mes: %s\n", compra[0],compra[1],compra[2], compra[3], compra[4], compra[5]);
+			preco = strtod(compra[1], &compra[1]);
+			nr = atoi(compra[2]);
+			mes = atoi(compra[5]);
+			printf("Produto: %s Preço: %f Nr comprados: %d Tipo: %s Cliente: %s Mes: %d\n", compra[0], preco, nr, compra[3], compra[4], mes);
 		}
 
 
