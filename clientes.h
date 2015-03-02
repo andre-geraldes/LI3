@@ -3,4 +3,6 @@ typedef struct clientes {
 	struct clientes *esq, *dir;
 } Clientes;
 
-Clientes * inserir(Clientes * c, char * n);
+Clientes * addCliente(Clientes * c, char * n);
+
+void printC(Clientes * c);	

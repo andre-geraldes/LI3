@@ -3,7 +3,7 @@
 #include "clientes.h"
 #include <string.h>
 
-Clientes * inserir (Clientes * c, char * n){
+Clientes * addCliente (Clientes * c, char * n){
 	if (c == NULL) {
 		c = (Clientes *) malloc(sizeof(struct clientes));
 		strcpy(c->nome, n);
@@ -11,17 +11,17 @@ Clientes * inserir (Clientes * c, char * n){
 		c->esq = NULL;
 	}
 	else if (strcmp(c->nome, n) > 0) {
-		c->esq = inserir(c->esq, n);
+		c->esq = addCliente(c->esq, n);
 	}
-	else c->dir = inserir(c->dir, n);
+	else c->dir = addCliente(c->dir, n);
 	return c;
 }
 
-void print(Clientes * c){
+void printC(Clientes * c){
 	if (c != NULL) {
 		printf("%s\n",c->nome);
-		print(c->esq);
-		print(c->dir);
+		printC(c->esq);
+		printC(c->dir);
 	}
 }
 

@@ -3,7 +3,7 @@
 #include "produtos.h"
 #include <string.h>
 
-Produtos * inserir (Produtos * p, char * n){
+Produtos * addProduto (Produtos * p, char * n){
 	if (p == NULL) {
 		p = (Produtos *) malloc(sizeof(struct produtos));
 		strcpy(p->nome, n);
@@ -11,16 +11,16 @@ Produtos * inserir (Produtos * p, char * n){
 		p->esq = NULL;
 	}
 	else if (strcmp(p->nome, n) > 0) {
-		p->esq = inserir(p->esq, n);
+		p->esq = addProduto(p->esq, n);
 	}
-	else p->dir = inserir(p->dir, n);
+	else p->dir = addProduto(p->dir, n);
 	return p;
 }
 
-void print(Produtos * p){
+void printP(Produtos * p){
 	if (p != NULL) {
 		printf("%s\n",p->nome);
-		print(p->esq);
-		print(p->dir);
+		printP(p->esq);
+		printP(p->dir);
 	}
 }

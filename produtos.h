@@ -3,4 +3,6 @@ typedef struct produtos {
 	struct produtos *esq, *dir;
 } Produtos;
 
-Produtos * inserir(Produtos * c, char * n);
+Produtos * addProduto(Produtos * c, char * n);
+
+void printP(Produtos * p);
