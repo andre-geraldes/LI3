@@ -56,10 +56,10 @@ void leitura (char * nome_fich) {
 			
 			if (linha_valida(compra, preco, nr, mes)){
 				linhas_val++;
-				printf("Produto: %s Preço: %f Nr comprados: %d Tipo: %s Cliente: %s Mes: %d\n", compra[0], preco, nr, compra[3], compra[4], mes);
 			}
+			printf("Produto: %s Preço: %.2f Nr comprados: %d Tipo: %s Cliente: %s Mes: %d\n", compra[0], preco, nr, compra[3], compra[4], mes);
 		}
-	}
+	}	
 
 	printf("Ficheiro lido: %s\nNúmero de linhas lidas: %d\nNúmero de linhas válidas: %d\n", nome_fich, linhas, linhas_val);
 	
