@@ -17,6 +17,21 @@ Produtos * addProduto (Produtos * p, char * n){
 	return p;
 }
 
+int existeProduto (Produtos *p, char * n){
+	int bool = 0;
+	if (p == NULL){
+		
+	}
+	else if (strcmp(p->nome, n) == 0){
+		bool = 1;
+	}
+	else if (strcmp(p->nome, n) > 0) {
+		bool = existeProduto(p->esq, n);
+	}
+	else bool = existeProduto(p->dir, n);
+	return bool;
+}
+
 void printP(Produtos * p){
 	if (p != NULL) {
 		printf("%s\n",p->nome);

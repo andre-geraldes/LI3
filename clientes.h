@@ -5,4 +5,6 @@ typedef struct clientes {
 
 Clientes * addCliente(Clientes * c, char * n);
 
+int existeCliente (Clientes *c, char * n);
+
 void printC(Clientes * c);	

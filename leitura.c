@@ -69,7 +69,8 @@ void leitura (char * nome_fich) {
 		}
 	}	
 	printf("Ficheiro lido: %s\nNúmero de linhas lidas: %d\nNúmero de linhas válidas: %d\n", nome_fich, linhas, linhas_val);
-
+	
+	
 	free(str);
 	free(string);
 	fclose(ficheiro);

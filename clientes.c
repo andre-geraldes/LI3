@@ -17,6 +17,21 @@ Clientes * addCliente (Clientes * c, char * n){
 	return c;
 }
 
+int existeCliente (Clientes *c, char * n){
+	int bool = 0;
+	if (c == NULL){
+		
+	}
+	else if (strcmp(c->nome, n) == 0){
+		bool = 1;
+	}
+	else if (strcmp(c->nome, n) > 0) {
+		bool = existeCliente(c->esq, n);
+	}
+	else bool = existeCliente(c->dir, n);
+	return bool;
+}
+
 void printC(Clientes * c){
 	if (c != NULL) {
 		printf("%s\n",c->nome);
@@ -25,11 +40,8 @@ void printC(Clientes * c){
 	}
 }
 
-/*int main () {
+/*
 	Clientes * n[26];
 	n[0] = inserir(n[0], "Arroz");
-	n[0] = inserir(n[0], "Az");
 	print(n[0]);
-	return 0;
-}
 */
