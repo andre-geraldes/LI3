@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "clientes.h"
 
 int linha_valida (char ** c, double p, int n, int m){
 	//Validar Cliente e produto
@@ -26,6 +27,8 @@ void leitura (char * nome_fich) {
 	double preco;
 	char * compra[6];
 
+	Clientes * clientes[26];
+
 	ficheiro = fopen(nome_fich, "r");
 	while ((string = fgets (str, 100, ficheiro)) != NULL) {
 		linhas++;
@@ -33,7 +36,9 @@ void leitura (char * nome_fich) {
 		if (strcmp(nome_fich, "FichClientes.txt") == 0){
 			token = strtok(string, limit);
 			token[strlen(token)-2] = '\0';
-			printf("Cliente: %s \n",token);
+			clientes[token[0]-'A'] = inserir(clientes[token[0]-'A'], token);
+			//printf("Cliente: %s \n",token);
+			//Verificar clientes?
 			linhas_val++;
 		}
 		else if (strcmp(nome_fich, "FichProdutos.txt") == 0){
@@ -60,7 +65,6 @@ void leitura (char * nome_fich) {
 			printf("Produto: %s Preço: %.2f Nr comprados: %d Tipo: %s Cliente: %s Mes: %d\n", compra[0], preco, nr, compra[3], compra[4], mes);
 		}
 	}	
-
 	printf("Ficheiro lido: %s\nNúmero de linhas lidas: %d\nNúmero de linhas válidas: %d\n", nome_fich, linhas, linhas_val);
 	
 	free(str);
@@ -71,6 +75,6 @@ void leitura (char * nome_fich) {
 
 int main (){
 	
-	leitura("Compras.txt");
+	leitura("FichClientes.txt");
 	return 0;
 }
