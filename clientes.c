@@ -25,15 +25,11 @@ void print(Clientes * c){
 	}
 }
 
-int main () {
+/*int main () {
 	Clientes * n[26];
 	n[0] = inserir(n[0], "Arroz");
 	n[0] = inserir(n[0], "Az");
-	n[0] = inserir(n[0], "Ab");
-	n[0] = inserir(n[0], "Arroz");
-	n[0] = inserir(n[0], "Az");
-	n[0] = inserir(n[0], "Ab");
-	p
 	print(n[0]);
 	return 0;
 }
+*/
