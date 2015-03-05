@@ -20,6 +20,7 @@ void leitura (char * nome_fich) {
 	char *token = NULL;
 	char limit[2] = " ";
 
+	int maior = 0;
 	int linhas = 0;
 	int linhas_val = 0;
 	int i = 0;
@@ -36,14 +37,18 @@ void leitura (char * nome_fich) {
 		linhas++;
 		
 		if (strcmp(nome_fich, "FichClientes.txt") == 0){
+			if (strlen(str) > maior) maior = strlen(str);
 			token = strtok(string, limit);
-			token[strlen(token)-2] = '\0';
+			//token[strlen(token)-2] = '\0';
+			token[5] = '\0';
 			clientes[token[0]-'A'] = addCliente(clientes[token[0]-'A'], token);
-			//printf("Cliente: %s \n",token);
+			//printf("Cliente: |%s| \n",token);
 			//Verificar clientes?
 			linhas_val++;
 		}
 		else if (strcmp(nome_fich, "FichProdutos.txt") == 0){
+			if (strlen(str) > maior) maior = strlen(str);
+
 			token = strtok(string, limit);
 			token[strlen(token)-2] = '\0';
 			produtos[token[0]-'A'] = addProduto(produtos[token[0]-'A'], token);	
@@ -51,6 +56,8 @@ void leitura (char * nome_fich) {
 			linhas_val++;
 		}
 		else if (strcmp(nome_fich, "Compras.txt") == 0){
+			if (strlen(str) > maior) maior = strlen(str);
+			
 			token = strtok(string, limit);
 			compra[0] = token;
 			for(i=1; token != NULL && i < 6; i++) {
@@ -65,10 +72,10 @@ void leitura (char * nome_fich) {
 			if (linha_valida(compra, preco, nr, mes)){
 				linhas_val++;
 			}
-			printf("Produto: %s Preço: %.2f Nr comprados: %d Tipo: %s Cliente: %s Mes: %d\n", compra[0], preco, nr, compra[3], compra[4], mes);
+			//printf("Produto: %s Preço: %.2f Nr comprados: %d Tipo: %s Cliente: %s Mes: %d\n", compra[0], preco, nr, compra[3], compra[4], mes);
 		}
 	}	
-	printf("Ficheiro lido: %s\nNúmero de linhas lidas: %d\nNúmero de linhas válidas: %d\n", nome_fich, linhas, linhas_val);
+	printf("Ficheiro lido: %s\nNúmero de linhas lidas: %d\nNúmero de linhas válidas: %d\nMaior linha: %d\n", nome_fich, linhas, linhas_val, maior);
 	
 	
 	free(str);
@@ -79,7 +86,7 @@ void leitura (char * nome_fich) {
 
 int main (){
 	
-	leitura("FichClientes.txt");
-	leitura("FichProdutos.txt");	
+	
+	leitura("FichClientes.txt");	
 	return 0;
 }
