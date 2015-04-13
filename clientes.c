@@ -1,9 +1,7 @@
 #include "clientes.h"
+#include "aux.h"
 
-// A utility function to get maximum of two integers
-int maxC(int a, int b);
- 
-// A utility function to get altura of the tree
+/* Função para calcular a altura da arvore*/
 int alturaC(NodoC N)
 {
     if (N == NULL)
@@ -11,64 +9,54 @@ int alturaC(NodoC N)
     return N->altura;
 }
  
-// A utility function to get maximum of two integers
-int maxC(int a, int b)
-{
-    return (a > b)? a : b;
-}
- 
-/* Helper function that allocates a novo NodoC with the given valor and
-    NULL esq and dir pointers. */
+/* Função que aloca um novo NodoC com o valor recebido e inicializa a esq e dir a NULL. */
 NodoC novoNodoC(char * valor)
 {
-    struct NodoC* NodoC = (NodoC)
-                        malloc(sizeof(struct NodoC));
-    strcpy(NodoC->valor, valor);
-    NodoC->esq   = NULL;
-    NodoC->dir   = NULL;
-    NodoC->altura = 1;  // novo NodoC is initially added at leaf
-    return(NodoC);
+    struct nodoc* nodo = (NodoC)malloc(sizeof(struct nodoc));
+    strcpy(nodo->valor, valor);
+    nodo->esq   = NULL;
+    nodo->dir   = NULL;
+    nodo->altura = 1;  /* novo NodoC adicionado como folha*/
+    return(nodo);
 }
  
-// A utility function to dir rotate subtree rooted with y
-// See the diagram given above.
+/* Função que faz a rotação à direita*/
 NodoC dirRotateC(NodoC y)
 {
     NodoC x = y->esq;
     NodoC T2 = x->dir;
  
-    // Perform rotation
+    /* Rotação */
     x->dir = y;
     y->esq = T2;
  
-    // Update alturas
-    y->altura = maxC(alturaC(y->esq), alturaC(y->dir))+1;
-    x->altura = maxC(alturaC(x->esq), alturaC(x->dir))+1;
+    /* Update altura */
+    y->altura = max(alturaC(y->esq), alturaC(y->dir))+1;
+    x->altura = max(alturaC(x->esq), alturaC(x->dir))+1;
  
-    // Return novo root
+    /* Return novo root */
     return x;
 }
  
-// A utility function to esq rotate subtree rooted with x
-// See the diagram given above.
+/* Função que faz a rotação à esquerda */
 NodoC esqRotateC(NodoC x)
 {
     NodoC y = x->dir;
     NodoC T2 = y->esq;
  
-    // Perform rotation
+    /* Rotação */
     y->esq = x;
     x->dir = T2;
  
-    //  Update altura
+    /*  Update altura */
     x->altura = max(alturaC(x->esq), alturaC(x->dir))+1;
     y->altura = max(alturaC(y->esq), alturaC(y->dir))+1;
  
-    // Return novo root
+    /* Return novo root */
     return y;
 }
  
-// Get Balance factor of NodoC N
+/* Retorna o balanceamento do nodo */
 int getBalanceC(NodoC N)
 {
     if (N == NULL)
@@ -76,50 +64,49 @@ int getBalanceC(NodoC N)
     return alturaC(N->esq) - alturaC(N->dir);
 }
  
-NodoC insertC(NodoC NodoC, char * valor)
+NodoC insertC(NodoC nodo, char * valor)
 {
-    /* 1.  Perform the normal BST rotation */
-    if (NodoC == NULL)
+    /* 1.  Rotação normal de uma arvore */
+    if (nodo == NULL)
         return(novoNodoC(valor));
  
-    if (strcmp(valor, NodoC->valor) < 0)
-        NodoC->esq  = insertC(NodoC->esq, valor);
-    else if (strcmp(valor, NodoC->valor) > 0)
-        NodoC->dir = insertC(NodoC->dir, valor);
+    if (strcmp(valor, nodo->valor) < 0)
+        nodo->esq  = insertC(nodo->esq, valor);
+    else if (strcmp(valor, nodo->valor) > 0)
+        nodo->dir = insertC(nodo->dir, valor);
  
-    /* 2. Update altura of this ancestor NodoC */
-    NodoC->altura = max(alturaC(NodoC->esq), alturaC(NodoC->dir)) + 1;
+    /* 2. Update altura do nodo anterior ao nodo */
+    nodo->altura = max(alturaC(nodo->esq), alturaC(nodo->dir)) + 1;
  
-    /* 3. Get the balance factor of this ancestor NodoC to check whether
-       this NodoC became unbalanced */
-    int balance = getBalanceC(NodoC);
+    /* 3. Calculo do balaceamento do nodo para verificar se fico desbalanceado */
+    int balance = getBalanceC(nodo);
  
-    // If this NodoC becomes unbalanced, then there are 4 cases
+    /* Se ficou desbalanceado, temos 4 casos */
  
-    // esq esq Case
-    if (balance > 1 && (strcmp(valor, NodoC->esq->valor) < 0))
-        return dirRotateC(NodoC);
+    /* esq esq Case */
+    if (balance > 1 && (strcmp(valor, nodo->esq->valor) < 0))
+        return dirRotateC(nodo);
  
-    // dir dir Case
-    if (balance < -1 && (strcmp(valor, NodoC->dir->valor) > 0))
-        return esqRotateC(NodoC);
+    /* dir dir Case */
+    if (balance < -1 && (strcmp(valor, nodo->dir->valor) > 0))
+        return esqRotateC(nodo);
  
-    // esq dir Case
-    if (balance > 1 && (strcmp(valor, NodoC->esq->valor) > 0))
+    /* esq dir Case */
+    if (balance > 1 && (strcmp(valor, nodo->esq->valor) > 0))
     {
-        NodoC->esq =  esqRotateC(NodoC->esq);
-        return dirRotateC(NodoC);
+        nodo->esq =  esqRotateC(nodo->esq);
+        return dirRotateC(nodo);
     }
  
-    // dir esq Case
-    if (balance < -1 && (strcmp(valor, NodoC->dir->valor) < 0))
+    /* dir esq Case */
+    if (balance < -1 && (strcmp(valor, nodo->dir->valor) < 0))
     {
-        NodoC->dir = dirRotateC(NodoC->dir);
-        return esqRotateC(NodoC);
+        nodo->dir = dirRotateC(nodo->dir);
+        return esqRotateC(nodo);
     }
  
-    /* return the (unchanged) NodoC pointer */
-    return NodoC;
+    /* retorna o apontador de novo */
+    return nodo;
 }
 
 

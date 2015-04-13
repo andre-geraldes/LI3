@@ -2,17 +2,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct nodo
+typedef struct nodoc
 {
 	char valor[7];
-	struct nodo *esq;
-	struct nodo *dir;
+	struct nodoc *esq;
+	struct nodoc *dir;
 	int altura;
 } * NodoC;
 
 int alturaC(NodoC N);
-
-int maxC(int a, int b);
 
 NodoC novonodoC(char * valor);
 
