@@ -1,6 +1,10 @@
 #ifndef COMPRAS_H
 #define COMPRAS_H
 
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
 typedef struct listaCompras {
     char produto[7];
     char modo;

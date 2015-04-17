@@ -1,7 +1,4 @@
 #include "contabilidade.h"
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
 
 /**
  * Inicia a estrutura modo

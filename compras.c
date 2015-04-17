@@ -1,7 +1,4 @@
 #include"compras.h"
-#include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
 
 /**
  * Inicia a estrutura lista de compras

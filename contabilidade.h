@@ -1,6 +1,10 @@
 #ifndef CONTABILIDADE_H
 #define CONTABILIDADE_H
 
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
 typedef struct modo {
     int nvendas;
     double facturado;
