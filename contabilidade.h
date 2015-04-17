@@ -21,24 +21,26 @@ Contabilidade inserirContabilidade(Contabilidade c, char *p);
 
 Contabilidade actualizaContabilidade(Contabilidade c, char *p, char m, double pr, int q);
 
+int produtoFoiComprado(Contabilidade c, char *p);
+
 void imprimeModo(Modo m);
 
 void imprimeContabilidade(Contabilidade c);
 
 /* Gestão da AVL */
 
-int altura(Contabilidade nodo);
+int alturaCT(Contabilidade nodo);
 
-int fator (Contabilidade nodo);
+int fatorCT(Contabilidade nodo);
 
-Contabilidade rotacao_dir_dir(Contabilidade pai);
+Contabilidade rotacao_dir_dirCT(Contabilidade pai);
 
-Contabilidade rotacao_esq_esq(Contabilidade pai);
+Contabilidade rotacao_esq_esqCT(Contabilidade pai);
 
-Contabilidade rotacao_dir_esq(Contabilidade  pai);
+Contabilidade rotacao_dir_esqCT(Contabilidade  pai);
 
-Contabilidade rotacao_esq_dir(Contabilidade  pai);
+Contabilidade rotacao_esq_dirCT(Contabilidade  pai);
 
-Contabilidade balancear(Contabilidade nodo);
+Contabilidade balancearCT(Contabilidade nodo);
 
 #endif

@@ -67,7 +67,7 @@ ListaCompras insereElemListaCompras(ListaCompras l, char *p, char m, double pr, 
 
 /**
  * Insere compra na estrutura compras
- * NOTA:    precisa de balancear?
+ * NOTA:    precisa de balancearCP?
  * @param c
  * @param c
  * @param p
@@ -80,16 +80,31 @@ Compras insereCompra(Compras c, char *cl, char *p, char m, double pr, int q) {
         c = initCompras(c,cl,p,m,pr,q);
     } else if(strcmp(c->cliente,cl)==0) {
         c->lista = insereElemListaCompras(c->lista,p,m,pr,q);
-        c = balancear(c);
+        c = balancearCP(c);
     } else if(strcmp(c->cliente,cl)>0) {
         c->esq = insereCompra(c->esq,cl,p,m,pr,q);
-        c = balancear(c);
+        c = balancearCP(c);
     } else if(strcmp(c->cliente,cl)<0) {
         c->dir = insereCompra(c->dir,cl,p,m,pr,q);
-        c = balancear(c);        
+        c = balancearCP(c);        
     }
     
     return c;
+}
+
+/**
+ * Calcula o comprimento da lista de compras
+ * @param l
+ */
+int comprimentoListaCompras(ListaCompras l) {
+    int res=0;
+    ListaCompras aux = l;
+    
+    while(aux!=NULL) {
+        res++;
+        aux = aux->prox;
+    }
+    return res;
 }
 
 /**
@@ -113,7 +128,7 @@ void imprimeCompras(Compras c) {
     if(c!=NULL) {
         imprimeCompras(c->esq);
           puts("---------------");
-        printf("CLIENTE: %s\n",c->cliente);
+        printf("CLIENTE: %s COMPRAS: %d\n",c->cliente,comprimentoListaCompras(c->lista));
         imprimeListaCompras(c->lista);
           puts("---------------");
         imprimeCompras(c->dir);
@@ -124,29 +139,32 @@ void imprimeCompras(Compras c) {
  Gestão da AVL
  *************/
 
-/** Função que calcula a altura de um nodo **/
-int altura(Compras nodo){
+/** Função que calcula a alturaCP de um nodo **/
+int alturaCP(Compras nodo)
+{
 	int alt = 0;
     if (nodo != NULL){
-        int altura_esq = altura(nodo->esq);
-        int altura_dir = altura(nodo->dir);
+        int alturaCP_esq = alturaCP(nodo->esq);
+        int alturaCP_dir = alturaCP(nodo->dir);
         int max=0;
-        if(altura_esq > altura_dir) max = altura_dir;
+        if(alturaCP_esq > alturaCP_dir) max = alturaCP_dir;
         alt = 1 + max;
     }
     return alt;
 }
 
-/** Função que calcula o fator de balanceamento de um nodo **/
-int fator (Compras nodo){
-	int altura_esq = altura(nodo->esq);
-	int altura_dir = altura(nodo->dir);
-	int dif = altura_esq - altura_dir;
+/** Função que calcula o fatorCPCP de balanceamento de um nodo **/
+int fatorCP (Compras nodo)
+{
+	int alturaCP_esq = alturaCP(nodo->esq);
+	int alturaCP_dir = alturaCP(nodo->dir);
+	int dif = alturaCP_esq - alturaCP_dir;
 	return dif;
 }
 
 /** Rotação Dir Dir **/
-Compras rotacao_dir_dir(Compras pai){
+Compras rotacao_dir_dirCP(Compras pai)
+{
 	Compras  nodo1;
 	nodo1=pai->dir;
 	pai->dir = nodo1->esq;
@@ -155,7 +173,7 @@ Compras rotacao_dir_dir(Compras pai){
 }
 
 /** Rotação Esq Esq **/
-Compras rotacao_esq_esq(Compras pai){
+Compras rotacao_esq_esqCP(Compras pai){
 	Compras nodo1;
 	nodo1 = pai->esq;
 	pai->esq = nodo1->dir;
@@ -164,38 +182,38 @@ Compras rotacao_esq_esq(Compras pai){
 }
 
 /**Rotação Dir Esq */
-Compras rotacao_dir_esq(Compras  pai)
+Compras rotacao_dir_esqCP(Compras  pai)
 {
 	Compras  nodo1;
 	nodo1 = pai->dir;
-	pai->dir = rotacao_esq_esq(nodo1);
-	return rotacao_dir_dir(pai);
+	pai->dir = rotacao_esq_esqCP(nodo1);
+	return rotacao_dir_dirCP(pai);
 }
 
 /** Rotação Esq Dir **/
-Compras rotacao_esq_dir(Compras  pai){
+Compras rotacao_esq_dirCP(Compras  pai) {
 
 	Compras nodo1;
 	nodo1 = pai->esq;
-	pai->esq = rotacao_dir_dir(nodo1);
-	return rotacao_esq_esq(pai);
+	pai->esq = rotacao_dir_dirCP(nodo1);
+	return rotacao_esq_esqCP(pai);
 }
 
-/** Função para balancear a AVL **/
-Compras balancear(Compras nodo)
+/** Função para balancearCP a AVL **/
+Compras balancearCP(Compras nodo)
 {
-    int bfator = fator(nodo);
-    if (bfator >1) {
-        if (fator(nodo->esq) >0)
-            nodo=rotacao_esq_esq(nodo);
+    int bfatorCP = fatorCP(nodo);
+    if (bfatorCP >1) {
+        if (fatorCP(nodo->esq) >0)
+            nodo=rotacao_esq_esqCP(nodo);
         else
-            nodo=rotacao_esq_dir(nodo);
+            nodo=rotacao_esq_dirCP(nodo);
     }
-    else if(bfator < -1) {
-        if(fator(nodo->dir) >0)
-            nodo=rotacao_dir_esq(nodo);
+    else if(bfatorCP < -1) {
+        if(fatorCP(nodo->dir) >0)
+            nodo=rotacao_dir_esqCP(nodo);
         else
-            nodo=rotacao_dir_dir(nodo);
+            nodo=rotacao_dir_dirCP(nodo);
     }
     return nodo;
 }  
@@ -207,17 +225,26 @@ Compras balancear(Compras nodo)
 
 int main() {
     Compras c = NULL;
+    
+    c = insereCompra(c,"Ana","JJ0124",'N',1,5);
+    c = insereCompra(c,"Ana","AA0124",'N',1,5);
+    c = insereCompra(c,"Ana","FF0124",'N',1,5);
+    
     c = insereCompra(c,"Carlos","AA0124",'N',1,5);
     c = insereCompra(c,"Carlos","BB0124",'N',1,5);
     c = insereCompra(c,"Carlos","CC0124",'N',1,5);
     
-    c = insereCompra(c,"Bruno","DD0124",'P',1,5);
-    c = insereCompra(c,"Bruno","EE0124",'P',1,5);
-    c = insereCompra(c,"Bruno","FF0124",'P',1,5);
+    c = insereCompra(c,"Bruno","DD0124",'P',1.2,5);
+    c = insereCompra(c,"Bruno","EE0124",'P',1.3,5);
+    c = insereCompra(c,"Bruno","FF0124",'P',1.4,5);
     
-    c = insereCompra(c,"Ana","GG0124",'N',1,5);
-    c = insereCompra(c,"Ana","HH0124",'P',1,5);
-    c = insereCompra(c,"Ana","II0124",'N',1,5);
+    c = insereCompra(c,"Ana","GG0124",'N',3,5);
+    c = insereCompra(c,"Ana","HH0124",'P',6,5);
+    c = insereCompra(c,"Ana","II0124",'N',5,5);
+    
+    c = insereCompra(c,"Rui","RR0124",'N',2,5);
+    c = insereCompra(c,"Tico","TT0124",'P',3,5);
+    c = insereCompra(c,"Xavi","XX0124",'N',1,5);
     
     imprimeCompras(c);
     

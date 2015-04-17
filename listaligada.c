@@ -1,10 +1,4 @@
 #include"listaligada.h"
-#include"clientes.h"
-#include"produtos.h"
-
-#include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
 
 /**
  * Inicia a lista ligada
@@ -50,7 +44,7 @@ ListaLigada insereElemento(ListaLigada l, char *c) {
  * @param c
  * @return 
  */
-ListaLigada clientesParaLista(ListaLigada l, Clientes c) {
+ListaLigada clientesParaLista(ListaLigada l, NodoC c) {
     if(c!=NULL) {
         l = clientesParaLista(l,c->esq);
         l = insereElemento(l,c->nome);
@@ -66,7 +60,7 @@ ListaLigada clientesParaLista(ListaLigada l, Clientes c) {
  * @param c
  * @return 
  */
-ListaLigada produtosParaLista(ListaLigada l, Produtos c) {
+ListaLigada produtosParaLista(ListaLigada l, NodoP c) {
     if(c!=NULL) {
         l = produtosParaLista(l,c->esq);
         l = insereElemento(l,c->nome);

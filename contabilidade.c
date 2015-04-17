@@ -49,10 +49,10 @@ Contabilidade inserirContabilidade(Contabilidade c, char *p) {
         c = initContabilidade(c,p);
     } else if(strcmp(c->produto,p)<0) {
         c->dir = inserirContabilidade(c->dir,p);
-        c = balancear(c);
+        c = balancearCT(c);
     } else if(strcmp(c->produto,p)>0) {
         c->esq = inserirContabilidade(c->esq,p);
-        c = balancear(c);
+        c = balancearCT(c);
     }
     /* Case já tenha o código retorna sem alterações */
     return c;
@@ -87,6 +87,33 @@ Contabilidade actualizaContabilidade(Contabilidade c, char *p, char m, double pr
         }
     }
     return c;
+}
+
+/**
+ * Verifica se um produto foi comprado num determinado mês
+ * NOTA: O apontador contabilidade corresponde a um mês
+ *       passado como parâmetro
+ * @param c
+ * @param p
+ */
+int produtoFoiComprado(Contabilidade c, char *p) {
+    int res=0;
+    
+    if(c==NULL) {
+        res = 0;
+    } else if(strcmp(c->produto,p)==0) {
+        if((c->normal->nvendas > 0) || (c->promocao->nvendas>0)) {
+            res = 1;
+        } else {
+            res = 0;
+        }
+    } else if(strcmp(c->produto,p)>0) {
+        res =  produtoFoiComprado(c->esq,p);
+    } else {
+        res = produtoFoiComprado(c->dir,p);
+    }
+    
+    return res;
 }
 
 /**
@@ -126,11 +153,11 @@ void imprimeContabilidade(Contabilidade c) {
  *************/
 
 /** Função que calcula a altura de um nodo **/
-int altura(Contabilidade nodo){
+int alturaCT(Contabilidade nodo){
 	int alt = 0;
     if (nodo != NULL){
-        int altura_esq = altura(nodo->esq);
-        int altura_dir = altura(nodo->dir);
+        int altura_esq = alturaCT(nodo->esq);
+        int altura_dir = alturaCT(nodo->dir);
         int max=0;
         if(altura_esq > altura_dir) max = altura_dir;
         alt = 1 + max;
@@ -139,15 +166,15 @@ int altura(Contabilidade nodo){
 }
 
 /** Função que calcula o fator de balanceamento de um nodo **/
-int fator (Contabilidade nodo){
-	int altura_esq = altura(nodo->esq);
-	int altura_dir = altura(nodo->dir);
+int fatorCT(Contabilidade nodo){
+	int altura_esq = alturaCT(nodo->esq);
+	int altura_dir = alturaCT(nodo->dir);
 	int dif = altura_esq - altura_dir;
 	return dif;
 }
 
 /** Rotação Dir Dir **/
-Contabilidade rotacao_dir_dir(Contabilidade pai){
+Contabilidade rotacao_dir_dirCT(Contabilidade pai){
 	Contabilidade  nodo1;
 	nodo1=pai->dir;
 	pai->dir = nodo1->esq;
@@ -156,7 +183,7 @@ Contabilidade rotacao_dir_dir(Contabilidade pai){
 }
 
 /** Rotação Esq Esq **/
-Contabilidade rotacao_esq_esq(Contabilidade pai){
+Contabilidade rotacao_esq_esqCT(Contabilidade pai){
 	Contabilidade nodo1;
 	nodo1 = pai->esq;
 	pai->esq = nodo1->dir;
@@ -165,38 +192,38 @@ Contabilidade rotacao_esq_esq(Contabilidade pai){
 }
 
 /**Rotação Dir Esq */
-Contabilidade rotacao_dir_esq(Contabilidade  pai)
+Contabilidade rotacao_dir_esqCT(Contabilidade  pai)
 {
 	Contabilidade  nodo1;
 	nodo1 = pai->dir;
-	pai->dir = rotacao_esq_esq(nodo1);
-	return rotacao_dir_dir(pai);
+	pai->dir = rotacao_esq_esqCT(nodo1);
+	return rotacao_dir_dirCT(pai);
 }
 
 /** Rotação Esq Dir **/
-Contabilidade rotacao_esq_dir(Contabilidade  pai){
+Contabilidade rotacao_esq_dirCT(Contabilidade  pai){
 
 	Contabilidade nodo1;
 	nodo1 = pai->esq;
-	pai->esq = rotacao_dir_dir(nodo1);
-	return rotacao_esq_esq(pai);
+	pai->esq = rotacao_dir_dirCT(nodo1);
+	return rotacao_esq_esqCT(pai);
 }
 
-/** Função para balancear a AVL **/
-Contabilidade balancear(Contabilidade nodo)
+/** Função para balancearCT a AVL **/
+Contabilidade balancearCT(Contabilidade nodo)
 {
-    int bfator = fator(nodo);
+    int bfator = fatorCT(nodo);
     if (bfator >1) {
-        if (fator(nodo->esq) >0)
-            nodo=rotacao_esq_esq(nodo);
+        if (fatorCT(nodo->esq) >0)
+            nodo=rotacao_esq_esqCT(nodo);
         else
-            nodo=rotacao_esq_dir(nodo);
+            nodo=rotacao_esq_dirCT(nodo);
     }
     else if(bfator < -1) {
-        if(fator(nodo->dir) >0)
-            nodo=rotacao_dir_esq(nodo);
+        if(fatorCT(nodo->dir) >0)
+            nodo=rotacao_dir_esqCT(nodo);
         else
-            nodo=rotacao_dir_dir(nodo);
+            nodo=rotacao_dir_dirCT(nodo);
     }
     return nodo;
 }  
@@ -206,6 +233,7 @@ int main() {
     Contabilidade c = NULL;
     
     /* Leitura dos códigos */
+    c = inserirContabilidade(c,"HH0124");
     c = inserirContabilidade(c,"DD0124");
     c = inserirContabilidade(c,"CC0124");
     c = inserirContabilidade(c,"BB0124");
@@ -222,7 +250,12 @@ int main() {
     
     c = actualizaContabilidade(c,"EE0124",'N',1.7,5);
     
-    imprimeContabilidade(c);
+    /* imprimeContabilidade(c); */
+    printf("PRODUTO: HH0124 FOI_COMPRADO: %d\n",produtoFoiComprado(c,"HH0124")); /* nao */
+    printf("PRODUTO: BB0124 FOI_COMPRADO: %d\n",produtoFoiComprado(c,"BB0124")); /* nao */
+    printf("PRODUTO: FF0124 FOI_COMPRADO: %d\n",produtoFoiComprado(c,"FF0124")); /* nao */
+    printf("PRODUTO: DD0124 FOI_COMPRADO: %d\n",produtoFoiComprado(c,"DD0124")); /* sim */
+    printf("PRODUTO: AA0124 FOI_COMPRADO: %d\n",produtoFoiComprado(c,"AA0124")); /* sim */
     
     return 0;
 }

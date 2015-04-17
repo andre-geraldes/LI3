@@ -23,25 +23,27 @@ ListaCompras insereElemListaCompras(ListaCompras l, char *p, char m, double pr, 
 
 Compras insereCompra(Compras c, char *cl, char *p, char m, double pr, int q);
 
+int comprimentoListaCompras(ListaCompras l);
+
 void imprimeListaCompras(ListaCompras l);
 
 void imprimeCompras(Compras c);
 
 /* Gestão da AVL */
 
-int altura(Compras nodo);
+int alturaCP(Compras nodo);
 
-int fator (Compras nodo);
+int fatorCP(Compras nodo);
 
-Compras rotacao_dir_dir(Compras pai);
+Compras rotacao_dir_dirCP(Compras pai);
 
-Compras rotacao_esq_esq(Compras pai);
+Compras rotacao_esq_esqCP(Compras pai);
 
-Compras rotacao_dir_esq(Compras pai);
+Compras rotacao_dir_esqCP(Compras pai);
 
-Compras rotacao_esq_dir(Compras pai);
+Compras rotacao_esq_dirCP(Compras pai);
 
-Compras balancear(Compras nodo);
+Compras balancearCP(Compras nodo);
 
 
 #endif
