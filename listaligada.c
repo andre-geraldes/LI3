@@ -37,35 +37,11 @@ ListaLigada insereElemento(ListaLigada l, char *c) {
     return l;
 }
 
-/**
- * Passa de uma árvore para uma lista em INORDER
- * »CLIENTES
- * @param l
- * @param c
- * @return 
- */
-ListaLigada clientesParaLista(ListaLigada l, NodoC c) {
-    if(c!=NULL) {
-        l = clientesParaLista(l,c->esq);
-        l = insereElemento(l,c->nome);
-        l = clientesParaLista(l,c->dir);
+int comprimentoListaLigada(ListaLigada l){
+    int c = 0;
+    while(l != NULL){
+        c++;
+        l = l->prox;
     }
-    return l;
+    return c;
 }
-
-/**
- * Passa de uma árvore para uma lista em INORDER
- * »PRODUTOS
- * @param l
- * @param c
- * @return 
- */
-ListaLigada produtosParaLista(ListaLigada l, NodoP c) {
-    if(c!=NULL) {
-        l = produtosParaLista(l,c->esq);
-        l = insereElemento(l,c->nome);
-        l = produtosParaLista(l,c->dir);
-    }
-    return l;
-}
-

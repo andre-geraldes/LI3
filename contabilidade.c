@@ -46,12 +46,11 @@ Contabilidade inserirContabilidade(Contabilidade c, char *p) {
         c = initContabilidade(c,p);
     } else if(strcmp(c->produto,p)<0) {
         c->dir = inserirContabilidade(c->dir,p);
-        c = balancearCT(c);
     } else if(strcmp(c->produto,p)>0) {
         c->esq = inserirContabilidade(c->esq,p);
-        c = balancearCT(c);
     }
     /* Case já tenha o código retorna sem alterações */
+    /* c = balancearCT(c); */
     return c;
 }
 
@@ -224,35 +223,3 @@ Contabilidade balancearCT(Contabilidade nodo)
     }
     return nodo;
 }  
-
-
-int main() {
-    Contabilidade c = NULL;
-    
-    /* Leitura dos códigos */
-    c = inserirContabilidade(c,"HH0124");
-    c = inserirContabilidade(c,"DD0124");
-    c = inserirContabilidade(c,"CC0124");
-    c = inserirContabilidade(c,"BB0124");
-    c = inserirContabilidade(c,"AA0124");
-    
-    /* Leitura das compras */
-    c = actualizaContabilidade(c,"AA0124",'N',1,5);
-    c = actualizaContabilidade(c,"AA0124",'N',1.7,5);
-    c = actualizaContabilidade(c,"AA0124",'P',1,5);
-    c = actualizaContabilidade(c,"AA0124",'P',1.7,5);
-    
-    c = actualizaContabilidade(c,"DD0124",'N',2,3);
-    c = actualizaContabilidade(c,"DD0124",'P',0.5,10);
-    
-    c = actualizaContabilidade(c,"EE0124",'N',1.7,5);
-    
-    /* imprimeContabilidade(c); */
-    printf("PRODUTO: HH0124 FOI_COMPRADO: %d\n",produtoFoiComprado(c,"HH0124")); /* nao */
-    printf("PRODUTO: BB0124 FOI_COMPRADO: %d\n",produtoFoiComprado(c,"BB0124")); /* nao */
-    printf("PRODUTO: FF0124 FOI_COMPRADO: %d\n",produtoFoiComprado(c,"FF0124")); /* nao */
-    printf("PRODUTO: DD0124 FOI_COMPRADO: %d\n",produtoFoiComprado(c,"DD0124")); /* sim */
-    printf("PRODUTO: AA0124 FOI_COMPRADO: %d\n",produtoFoiComprado(c,"AA0124")); /* sim */
-    
-    return 0;
-}

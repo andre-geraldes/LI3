@@ -3,10 +3,15 @@
 #include <stdlib.h>
 #include "clientes.h"
 #include "produtos.h"
+#include "listaligada.h"
+#include "contabilidade.h"
+#include "compras.h"
+#include "aux.h"
 
-
-NodoC clientes[26];
-NodoP produtos[26];
+static NodoC clientes[26];
+static NodoP produtos[26];
+static Contabilidade contas[12];
+static Compras compras[12];
 
 int linha_valida (char ** c, double p, int n, int m, NodoC cl, NodoP pr){
 	int x = 0;
@@ -21,9 +26,11 @@ int leitura (char * nome_fich) {
 	char *str = (char *) malloc(100);
 	char *token = NULL;
 	char limit[2] = " ";
+	char modo;
 
 	int linhas = 0;
 	int linhas_val = 0;
+	int i;
 
 	ficheiro = fopen(nome_fich, "r");
 	
@@ -42,6 +49,9 @@ int leitura (char * nome_fich) {
 			token = strtok(string, limit);
 			token[6] = '\0';
 			produtos[token[0]-'A'] = insertP(produtos[token[0]-'A'], token);
+			for(i = 0; i < 12; i++){
+				contas[i] = inserirContabilidade(contas[i],token);
+			}
 		}
 		printf("Ficheiro lido: %s\nNúmero de linhas lidas: %d\n", nome_fich, linhas);	
 	}
@@ -62,26 +72,23 @@ int leitura (char * nome_fich) {
 				compra[i] = token;
 			}
 			
+			/* compra[4] -> cliente
+			 * compra[0] -> produto
+			 */ 
 			preco = strtod(compra[1], &compra[1]);
 			nr = atoi(compra[2]);
 			mes = atoi(compra[5]);
+			modo = compra[3][0];
 			
 			if (linha_valida(compra, preco, nr, mes, clientes[compra[4][0]-'A'], produtos[compra[0][0]-'A'])){
 				linhas_val++;
+				compras[mes-1] = insereCompra(compras[mes-1], compra[4], compra[0], modo, preco, nr);
 			}
-			//printf("Produto: %s Preço: %.2f Nr comprados: %d Tipo: %s Cliente: %s Mes: %d\n", compra[0], preco, nr, compra[3], compra[4], mes);
 		}
 		printf("Ficheiro lido: %s\nNúmero de linhas lidas: %d\nNúmero de linhas válidas: %d\n", nome_fich, linhas, linhas_val);	
 	}
 	else return 0;
 	
-	//int k = contaNodosC(clientes[0]);
-	//char matriz[k][7];
-	//int i=0;
-
-	//listarC(clientes[0], k, 7, matriz, &i);
-	//for (int h = 0; h < k; h++) printf("Posição: %d Cliente: %s\n",h, matriz[h]);
-
 	free(str);
 	free(string);
 	fclose(ficheiro);
@@ -90,10 +97,24 @@ int leitura (char * nome_fich) {
 
 
 int main (){
+	int i;
+	ListaLigada l = NULL;
 	
-	
+	for(i = 0; i < 12; i++){
+		contas[i] = NULL;
+		compras[i] = NULL;
+	}
+
 	leitura("FichClientes.txt");
 	leitura("FichProdutos.txt");
 	leitura("Compras.txt");
+
+	for(i = 0; i < 12; i++){
+		compras[i] = balancearCP(compras[i]);
+	}
+	imprimeCompras(compras[0]);
+	/* QUERIE 2 */
+	//l = clientesParaLista(l, clientes[1]); 
+	//imprimeLista(l); 
 	return 0;
 }
