@@ -77,13 +77,13 @@ Compras insereCompra(Compras c, char *cl, char *p, char m, double pr, int q) {
         c = initCompras(c,cl,p,m,pr,q);
     } else if(strcmp(c->cliente,cl)==0) {
         c->lista = insereElemListaCompras(c->lista,p,m,pr,q);
-        c = balancearCP(c);
+        //c = balancearCP(c);
     } else if(strcmp(c->cliente,cl)>0) {
         c->esq = insereCompra(c->esq,cl,p,m,pr,q);
-        c = balancearCP(c);
+        //c = balancearCP(c);
     } else if(strcmp(c->cliente,cl)<0) {
         c->dir = insereCompra(c->dir,cl,p,m,pr,q);
-        c = balancearCP(c);        
+        //c = balancearCP(c);        
     }
     
     return c;
@@ -214,36 +214,3 @@ Compras balancearCP(Compras nodo)
     }
     return nodo;
 }  
-
-
-/**
- Main
- */
-
-int main() {
-    Compras c = NULL;
-    
-    c = insereCompra(c,"Ana","JJ0124",'N',1,5);
-    c = insereCompra(c,"Ana","AA0124",'N',1,5);
-    c = insereCompra(c,"Ana","FF0124",'N',1,5);
-    
-    c = insereCompra(c,"Carlos","AA0124",'N',1,5);
-    c = insereCompra(c,"Carlos","BB0124",'N',1,5);
-    c = insereCompra(c,"Carlos","CC0124",'N',1,5);
-    
-    c = insereCompra(c,"Bruno","DD0124",'P',1.2,5);
-    c = insereCompra(c,"Bruno","EE0124",'P',1.3,5);
-    c = insereCompra(c,"Bruno","FF0124",'P',1.4,5);
-    
-    c = insereCompra(c,"Ana","GG0124",'N',3,5);
-    c = insereCompra(c,"Ana","HH0124",'P',6,5);
-    c = insereCompra(c,"Ana","II0124",'N',5,5);
-    
-    c = insereCompra(c,"Rui","RR0124",'N',2,5);
-    c = insereCompra(c,"Tico","TT0124",'P',3,5);
-    c = insereCompra(c,"Xavi","XX0124",'N',1,5);
-    
-    imprimeCompras(c);
-    
-    return 0;
-}

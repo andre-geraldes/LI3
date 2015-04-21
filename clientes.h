@@ -1,6 +1,10 @@
+#ifndef CLIENTES_H
+#define CLIENTES_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "listaligada.h"
 
 typedef struct nodoc
 {
@@ -24,6 +28,10 @@ NodoC insertC(NodoC nodo, char * valor);
 
 int contaNodosC(NodoC avl);
 
-void listarC(NodoC n, int l, int c, char lista[l][c], int *i);
+/* void listarC(NodoC n, int l, int c, char lista[l][c], int *i); */
+
+ListaLigada clientesParaLista(ListaLigada l, NodoC c);
 
 int existeC(NodoC n, char * nom);
+
+#endif

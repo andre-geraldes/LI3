@@ -1,12 +1,9 @@
 #ifndef LLIGADA_H
 #define LLIGADA_H
 
-#include"clientes.h"
-#include"produtos.h"
-
-#include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 /**
  * Vai servir para passar as árvores de produtos
@@ -23,8 +20,6 @@ ListaLigada initLista(ListaLigada l, char *c);
 
 ListaLigada insereElemento(ListaLigada l, char *c);
 
-ListaLigada clientesParaLista(ListaLigada l, NodoC c);
-
-ListaLigada produtosParaLista(ListaLigada l, Nodop c);
+int comprimentoListaLigada(ListaLigada l);
 
 #endif

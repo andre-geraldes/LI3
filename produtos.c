@@ -66,6 +66,7 @@ int getBalanceP(NodoP N)
  
 NodoP insertP(NodoP nodo, char * valor)
 {
+    int balance;
     /* 1.  Rotação normal de uma arvore */
     if (nodo == NULL)
         return(novoNodoP(valor));
@@ -79,7 +80,7 @@ NodoP insertP(NodoP nodo, char * valor)
     nodo->altura = max(alturaP(nodo->esq), alturaP(nodo->dir)) + 1;
  
     /* 3. Calculo do balaceamento do nodo para verificar se fico desbalanceado */
-    int balance = getBalanceP(nodo);
+    balance = getBalanceP(nodo);
  
     /* Se ficou desbalanceado, temos 4 casos */
  
@@ -116,15 +117,20 @@ int contaNodosP(NodoP avl)
 	return 1 + contaNodosP(avl->esq) + contaNodosP(avl->dir);
 }
 
-void listarP(NodoP n, int l, int c, char lista[l][c], int *i)
-{
-	if (n != NULL)
-	{
-		listarP(n->esq, l, c, lista, i);
-		strcpy(lista[(*i)], n->valor);
-		(*i)++;
-		listarP(n->dir, l, c, lista, i);
-	}
+/**
+ * Passa de uma árvore para uma lista em INORDER
+ * »PRODUTOS
+ * @param l
+ * @param c
+ * @return 
+ */
+ListaLigada produtosParaLista(ListaLigada l, NodoP c) {
+    if(c!=NULL) {
+        l = produtosParaLista(l,c->dir);
+        l = insereElemento(l,c->valor);
+        l = produtosParaLista(l,c->esq);
+    }
+    return l;
 }
 
 int existeP(NodoP n, char * nom)

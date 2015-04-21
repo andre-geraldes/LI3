@@ -1,6 +1,10 @@
+#ifndef PRODUTOS_H
+#define PRODUTOS_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "listaligada.h"
 
 typedef struct nodop
 {
@@ -25,6 +29,10 @@ NodoP insertP(NodoP nodo, char * valor);
 
 int contaNodosP(NodoP avl);
 
-void listarP(NodoP n, int l, int c, char lista[l][c], int *i);
+void listarP(NodoP n, ListaLigada l);
+
+ListaLigada produtosParaLista(ListaLigada l, NodoP c);
 
 int existeP(NodoP n, char * nom);
+
+#endif

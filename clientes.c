@@ -66,6 +66,7 @@ int getBalanceC(NodoC N)
  
 NodoC insertC(NodoC nodo, char * valor)
 {
+    int balance; 
     /* 1.  Rotação normal de uma arvore */
     if (nodo == NULL)
         return(novoNodoC(valor));
@@ -78,8 +79,8 @@ NodoC insertC(NodoC nodo, char * valor)
     /* 2. Update altura do nodo anterior ao nodo */
     nodo->altura = max(alturaC(nodo->esq), alturaC(nodo->dir)) + 1;
  
-    /* 3. Calculo do balaceamento do nodo para verificar se fico desbalanceado */
-    int balance = getBalanceC(nodo);
+    /* 3. Calculo do balaceamento do nodo para verificar se fico desbalanceado */  
+    balance = getBalanceC(nodo);
  
     /* Se ficou desbalanceado, temos 4 casos */
  
@@ -116,15 +117,20 @@ int contaNodosC(NodoC avl)
 	return 1 + contaNodosC(avl->esq) + contaNodosC(avl->dir);
 }
 
-void listarC(NodoC n, int l, int c, char lista[l][c], int *i)
-{
-	if (n != NULL)
-	{
-		listarC(n->esq, l, c, lista, i);
-		strcpy(lista[(*i)], n->valor);
-		(*i)++;
-		listarC(n->dir, l, c, lista, i);
-	}
+/**
+ * Passa de uma árvore para uma lista em INORDER
+ * »CLIENTES
+ * @param l
+ * @param c
+ * @return 
+ */
+ListaLigada clientesParaLista(ListaLigada l, NodoC c) {
+    if(c!=NULL) {
+        l = clientesParaLista(l,c->dir);
+        l = insereElemento(l,c->valor);
+        l = clientesParaLista(l,c->esq);
+    }
+    return l;
 }
 
 int existeC(NodoC n, char * nom)
