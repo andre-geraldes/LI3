@@ -54,7 +54,6 @@ void imprimeNumQuery(int nq) {
     printf("|        QUERY %2d        |\n",nq);
       puts("==========================");
 }
-<<<<<<< HEAD
 
 int main() {
     int m;
@@ -64,5 +63,5 @@ int main() {
     
     return 0;
 }
-=======
->>>>>>> ac5eea7e7ba68538e3b0436087ebb95defe25c5a
+
+
