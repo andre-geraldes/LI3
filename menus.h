@@ -7,7 +7,7 @@
 
 int menuOpcoes();
 
-void executaQuery();
+void imprimeNumQuery(int nq);
 
 void carregaTextArt(char *nome_ficheiro);
 

@@ -48,18 +48,18 @@ void carregaTextArt(char *nome_ficheiro) {
     fclose(ficheiro); 
 }
 
-void executaQuery() {
-    
+void imprimeNumQuery(int nq) {
+    system("clear");
+      puts("==========================");
+    printf("|        QUERY %2d        |\n",nq);
+      puts("==========================");
 }
 
 int main() {
-    int num;
+    int m;
     
-    system("clear");
-    carregaTextArt("textart-big.txt");
-    
-    num = menuOpcoes();
-    printf("Opção: %d\n",num);
+    m=menuOpcoes();
+    imprimeNumQuery(m);
     
     return 0;
 }
