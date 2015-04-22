@@ -77,13 +77,10 @@ Compras insereCompra(Compras c, char *cl, char *p, char m, double pr, int q) {
         c = initCompras(c,cl,p,m,pr,q);
     } else if(strcmp(c->cliente,cl)==0) {
         c->lista = insereElemListaCompras(c->lista,p,m,pr,q);
-        //c = balancearCP(c);
     } else if(strcmp(c->cliente,cl)>0) {
         c->esq = insereCompra(c->esq,cl,p,m,pr,q);
-        //c = balancearCP(c);
     } else if(strcmp(c->cliente,cl)<0) {
-        c->dir = insereCompra(c->dir,cl,p,m,pr,q);
-        //c = balancearCP(c);        
+        c->dir = insereCompra(c->dir,cl,p,m,pr,q);    
     }
     
     return c;

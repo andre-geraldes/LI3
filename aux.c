@@ -12,12 +12,12 @@ void imprimeLista(ListaLigada ll){
 	ListaLigada l = ll;
 
 	if((nelem%40)) nrpag++;
-
+	
 	while(key != 'q'){
 		if(key == 'n'){
 			system("clear");
 			for(i = 0; i < 40 && l->prox != NULL; i++){
-				printf("%s\n", l->codigo);
+				printf("|  %s  |\n", l->codigo);
 				l = l->prox;
 			}
 			total += 40;
@@ -31,7 +31,7 @@ void imprimeLista(ListaLigada ll){
 				l = l->ant;
 			}
 			for(i = 0; i < 40 && l->prox != NULL; i++){
-				printf("%s\n", l->codigo);
+				printf("|  %s  |\n", l->codigo);
 				l = l->prox;
 			}
 			if(h > 1){
