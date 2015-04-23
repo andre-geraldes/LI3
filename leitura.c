@@ -99,6 +99,9 @@ int leitura (char * nome_fich) {
 
 void query1(){
 	char c;
+	system("clear");
+	imprimeNumQuery(1);
+
 	leitura("FichClientes.txt");
 	leitura("FichProdutos.txt");
 	leitura("Compras.txt");
@@ -112,8 +115,8 @@ void query2(){
 	ListaLigada l = NULL;
 
 	system("clear");
-	
-	puts("- - - - - Query 2 - - - - -");
+	imprimeNumQuery(2);
+
 	puts("Qual a letra inicial do código?");
 
 	scanf(" %c",&c);
@@ -138,8 +141,8 @@ void query3(){
 	Contabilidade aux;
 
 	system("clear");
+	imprimeNumQuery(3);
 
-	puts("- - - - - Query 3 - - - - -");
 	puts("Qual o mês?");
 
 	scanf("%d",&mes);
@@ -174,6 +177,9 @@ void query4(){
 	ListaLigada l = NULL, prod = NULL;
 	int i, j, flag = 0;
 
+	system("clear");
+	imprimeNumQuery(4);
+
 	for(i = 0; i < 26; i++){
 		prod = produtosParaLista(prod, produtos[i]);
 	}
@@ -200,7 +206,8 @@ void query5(){
 	ListaCompras auxcompras = NULL;
 
 	system("clear");
-	puts("- - - - - Query 5 - - - - -");
+	imprimeNumQuery(5);
+
 	puts("Qual o Cliente?");
 	scanf("%s",codigo);
 	while(!existeC(clientes[codigo[0]-'A'], codigo)){
@@ -244,9 +251,8 @@ void query6(){
 	ListaLigada l = NULL;
 
 	system("clear");
-	
-	puts("- - - - - Query 6 - - - - -");
-	
+	imprimeNumQuery(6);
+
 	puts("Qual a letra inicial do Cliente?");
 	scanf(" %c",&c);
 	while(c < 'A' || c > 'z') {
@@ -265,6 +271,15 @@ void query6(){
 		c = getchar();
 		c = getchar();
 	}
+
+}
+
+void query7(){
+	int mes1, mes2;
+
+	system("clear");
+	imprimeNumQuery(7);
+
 
 }
 
@@ -291,14 +306,11 @@ int main (){
 			case 4: query4(); break;
 			case 5: query5(); break;
 			case 6: query6(); break;
+			case 7: query7(); break;
     	}
 	
 	}
 
 
-
-	for(i = 0; i < 12; i++){
-		compras[i] = balancearCP(compras[i]);
-	}
 	return 0;
 }

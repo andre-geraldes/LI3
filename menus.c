@@ -49,11 +49,11 @@ void carregaTextArt(char *nome_ficheiro) {
 }
 
 void imprimeNumQuery(int nq) {
-    system("clear");
       puts("==========================");
     printf("|        QUERY %2d        |\n",nq);
       puts("==========================");
 }
+<<<<<<< Updated upstream
 
 int main() {
     int m;
@@ -65,3 +65,5 @@ int main() {
 }
 
 
+=======
+>>>>>>> Stashed changes
