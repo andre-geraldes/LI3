@@ -113,6 +113,24 @@ int produtoFoiComprado(Contabilidade c, char *p) {
 }
 
 /**
+ * Calcula o numero de vendas e o total facurado de um dado mês
+ * @param c
+ * @param v
+ * @param f
+ */
+void numeroVendasETotalFacturado(Contabilidade c, int *v, double *f) {
+    Contabilidade aux = c;
+    
+    if(aux!=NULL) {
+        (*v) += aux->normal->nvendas + aux->promocao->nvendas;
+        (*f) += aux->normal->facturado + aux->promocao->facturado;
+        numeroVendasETotalFacturado(aux->esq,v,f);
+        numeroVendasETotalFacturado(aux->dir,v,f);
+    }
+    
+}
+
+/**
  * Função auxiliar de impressão do modo
  *      ### APAGAR DEPOIS
  * @param m

@@ -10,7 +10,7 @@ int menuOpcoes() {
         puts("Query  3 - Dado um mês e um código, determina e apresenta o número total de vendas (N e P) e o total facturado.");
         puts("Query  4 - Determina a lista de códigos dos produtos que ninguem comprou.");
         puts("Query  5 - Dado um código de cliente, cria uma tabela com o número total de produtos comprados, mês a mês.");
-        puts("Query  6 - Dada uma letra, ");
+        puts("Query  6 - Dada uma letra, determina a lista de todos os códigos de clientes iniciados pela mesma.");
         puts("Query  7 - Dado um intervalo fechado de meses, determina o total de compras registadas e o total facturado.");
         puts("Query  8 - Dado um código de produto, determina os códigos (e número total) dos clientes que o compraram, distinguindo entre modo N e P.");
         puts("Query  9 - Dado um código de cliente e um mês, determina a lista de códigos de produtos que mais comprou.");
@@ -50,18 +50,10 @@ void carregaTextArt(char *nome_ficheiro) {
 
 void imprimeNumQuery(int nq) {
     system("clear");
-      puts("==========================");
-    printf("|        QUERY %2d        |\n",nq);
-      puts("==========================");
+      puts("\t==========================");
+    printf("\t|        QUERY %2d        |\n",nq);
+      puts("\t==========================\n");
 }
 
-int main() {
-    int m;
-    
-    m=menuOpcoes();
-    imprimeNumQuery(m);
-    
-    return 0;
-}
 
 

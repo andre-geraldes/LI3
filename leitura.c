@@ -99,6 +99,7 @@ int leitura (char * nome_fich) {
 
 void query1(){
 	char c;
+        
 	leitura("FichClientes.txt");
 	leitura("FichProdutos.txt");
 	leitura("Compras.txt");
@@ -111,9 +112,7 @@ void query2(){
 	char c = '1';
 	ListaLigada l = NULL;
 
-	system("clear");
-	
-	puts("- - - - - Query 2 - - - - -");
+	imprimeNumQuery(2);
 	puts("Qual a letra inicial do código?");
 
 	scanf(" %c",&c);
@@ -137,9 +136,7 @@ void query3(){
 	char c;
 	Contabilidade aux;
 
-	system("clear");
-
-	puts("- - - - - Query 3 - - - - -");
+	imprimeNumQuery(3);
 	puts("Qual o mês?");
 
 	scanf("%d",&mes);
@@ -173,7 +170,8 @@ void query3(){
 void query4(){
 	ListaLigada l = NULL, prod = NULL;
 	int i, j, flag = 0;
-
+        
+        imprimeNumQuery(4);
 	for(i = 0; i < 26; i++){
 		prod = produtosParaLista(prod, produtos[i]);
 	}
@@ -199,8 +197,7 @@ void query5(){
 	Compras aux = NULL;
 	ListaCompras auxcompras = NULL;
 
-	system("clear");
-	puts("- - - - - Query 5 - - - - -");
+	imprimeNumQuery(5);
 	puts("Qual o Cliente?");
 	scanf("%s",codigo);
 	while(!existeC(clientes[codigo[0]-'A'], codigo)){
@@ -243,10 +240,7 @@ void query6(){
 	char c = '1';
 	ListaLigada l = NULL;
 
-	system("clear");
-	
-	puts("- - - - - Query 6 - - - - -");
-	
+        imprimeNumQuery(6);
 	puts("Qual a letra inicial do Cliente?");
 	scanf(" %c",&c);
 	while(c < 'A' || c > 'z') {
@@ -268,10 +262,38 @@ void query6(){
 
 }
 
+void query7() {
+    int li,ls,i,valido=0,nvendas=0;
+    double facturado=0;
+    char c;
+    Contabilidade aux;
+    
+    imprimeNumQuery(7);
+    while(!valido) {
+        puts("Limite inferior:");
+        scanf("%d",&li);
+        puts("Limite superior:");
+        scanf("%d",&ls);
+        if(ls<li || li<1 || li>12 || ls<1 || ls>12) {
+            puts(" *** Intervalo inválido **** ");
+            valido = 0;
+        } else {
+            valido = 1;
+        }
+    }
+    
+    for(i=li-1;i<ls;i++) {
+        aux = contas[i];
+        numeroVendasETotalFacturado(aux,&nvendas,&facturado);                
+    }
+    printf("No intervalor [%d,%d] foram registadas %d vendas e um total facturado de %f€.\n",li,ls,nvendas,facturado);
+    
+    c = getchar();
+    c = getchar();
+}
 
 int main (){
-	int i, num = 1;
-	
+	int i, num = 1, lido=0;
 	
 	for(i = 0; i < 12; i++){
 		contas[i] = NULL;
@@ -280,20 +302,51 @@ int main (){
     
     while( num != 15 ){
     	system("clear");
-   		carregaTextArt("textart-big.txt");
-   		puts("\n");
-   		num = menuOpcoes();
+   	carregaTextArt("textart-big.txt");
+   	puts("\n");
+   	num = menuOpcoes();
     	printf("Opção: %d\n",num);
     	switch(num){
-    		case 1: query1(); break;
-			case 2: query2(); break;
-			case 3: query3(); break;
-			case 4: query4(); break;
-			case 5: query5(); break;
-			case 6: query6(); break;
+    		case 1: {
+                    /* Falta o caso de reler */
+                    query1(); 
+                    lido=1; 
+                    break;
+                }
+                
+		case 2: {
+                    if(lido) query2();
+                    else puts("Ainda não foi feita a leitura dos ficheiros.");
+                } break;
+                
+		case 3: {
+                    if(lido) query3();
+                    else puts("Ainda não foi feita a leitura dos ficheiros.");
+                } break;
+                
+		case 4: {
+                    if(lido) query4();
+                    else puts("Ainda não foi feita a leitura dos ficheiros.");
+                } break;
+                
+                /* OPção de guardar em ficheiro */
+                case 5: {
+                    if(lido) query5();
+                    else puts("Ainda não foi feita a leitura dos ficheiros.");
+                } break;
+                
+		case 6: {
+                    if(lido) query6();
+                    else puts("Ainda não foi feita a leitura dos ficheiros.");
+                } break;
+                
+                case 7: {
+                    if(lido) query7();
+                    else puts("Ainda não foi feita a leitura dos ficheiros.");
+                } break;
     	}
 	
-	}
+    }
 
 
 

@@ -27,6 +27,8 @@ Contabilidade actualizaContabilidade(Contabilidade c, char *p, char m, double pr
 
 int produtoFoiComprado(Contabilidade c, char *p);
 
+void numeroVendasETotalFacturado(Contabilidade c, int *v, double *f);
+
 void imprimeModo(Modo m);
 
 void imprimeContabilidade(Contabilidade c);
