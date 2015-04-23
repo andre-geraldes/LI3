@@ -265,7 +265,7 @@ void query6(){
 		c = getchar();
 		c = getchar();
 	}
-
+        
 }
 
 void query7() {
@@ -300,20 +300,23 @@ void query7() {
 void query8() {
     int i;
     char codigo[7];
-    ListaLigada clientesn = NULL, clientep = NULL;
+    ListaLigada clientesN = NULL, clientesP = NULL;
+    Compras caux;
+    
     imprimeNumQuery(8);
     
     puts("Insira o código do produto:");
+    scanf("%s",codigo);
+    while(!existeP(produtos[codigo[0]-'A'], codigo)){
+	puts("Código inválido, insira outra vez:");
 	scanf("%s",codigo);
-	while(!existeP(produtos[codigo[0]-'A'], codigo)){
-		puts("Código inválido, insira outra vez:");
-		scanf("%s",codigo);
-	}
-    
-    for(i = 0; i < 12; i++){
-    	
     }
     
+    for(i = 0; i < 12; i++){
+        caux = compras[i];
+    	clientesN = listaClientesCompraramProduto(caux,clientesN,codigo);
+    }
+    imprimeLista(clientesN);
 }
 
 int main (){

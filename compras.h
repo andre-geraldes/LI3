@@ -4,6 +4,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#include"listaligada.h"
 
 typedef struct listaCompras {
     char produto[7];
@@ -30,6 +31,8 @@ Compras insereCompra(Compras c, char *cl, char *p, char m, double pr, int q);
 int comprimentoListaCompras(ListaCompras l);
 
 int clienteComprouProduto(ListaCompras l, char *p);
+
+ListaLigada listaClientesCompraramProduto(Compras c, ListaLigada l, char *p);
 
 /* Gestão da AVL */
 

@@ -22,4 +22,6 @@ ListaLigada insereElemento(ListaLigada l, char *c);
 
 int comprimentoListaLigada(ListaLigada l);
 
+ListaLigada insereElemNaoRepetido(ListaLigada l, char *c);
+
 #endif

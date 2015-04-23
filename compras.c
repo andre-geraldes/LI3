@@ -102,25 +102,50 @@ int comprimentoListaCompras(ListaCompras l) {
 }
 
 
-
 /**
  * Retorna 0 se nao comprou
- * Retorna N se comprou N vezes
+ * Retorna 1 se comprou 
  * @param l
  * @param p
  * @return 
  */
-ListaLigada clienteComprouProduto(Compras c, ListaLigada l, char *p) {
-    int res=0;
-    ListaLigada laux = l;
+int clienteComprouProduto(ListaCompras l, char *p) {
+    int encontrou = 0;
+    ListaCompras laux = l;
     
-    if(c == NULL) {
+    if(l==NULL) {
         return l;
     } else {
-        if()   
+        /* Tem de verificar se é modo N ou P*/
+        while(laux && !encontrou) {
+            if(strcmp(l->produto,p)==0){
+                encontrou = 1;
+            }
+            laux = laux->prox;
+        }
     }
-    
-    return res;
+    /* Alternar res*/
+    return encontrou;
+}
+
+/**
+ * Retorna lista dos clientes que compraram um produto
+ * @param c
+ * @param l
+ * @param p
+ * @return 
+ */
+ListaLigada listaClientesCompraramProduto(Compras c, ListaLigada l, char *p) {
+    if(c!=NULL){
+        /* Se o cliente comprou o produto */
+        if(clienteComprouProduto(c->lista,p)) {
+            /* Insere-o na lista ligada */
+            l = insereElemNaoRepetido(l,c->cliente);
+        }
+        l = listaClientesCompraramProduto(c->esq,l,p);
+        l = listaClientesCompraramProduto(c->dir,l,p);
+    }
+    return l;
 }
 
 /*************

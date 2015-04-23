@@ -37,9 +37,16 @@ ListaLigada insereElemento(ListaLigada l, char *c) {
     return l;
 }
 
-ListaLigada insereNaoRepetido(ListaLigada l, char *c) {
+/**
+ * Insere um elemento nao repetido na lista ligada
+ * @param l
+ * @param c
+ * @return 
+ */
+ListaLigada insereElemNaoRepetido(ListaLigada l, char *c) {
     int encontrou = 0;
     ListaLigada aux = l;
+    
     if(l == NULL){
         l = initLista(l,c);
     } else {
@@ -54,6 +61,11 @@ ListaLigada insereNaoRepetido(ListaLigada l, char *c) {
     return l;
 }
 
+/**
+ * Devolve o comprimento da lista ligada
+ * @param l
+ * @return 
+ */
 int comprimentoListaLigada(ListaLigada l) {
     int c = 0;
     while(l != NULL){
