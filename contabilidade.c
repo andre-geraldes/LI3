@@ -98,7 +98,7 @@ int produtoFoiComprado(Contabilidade c, char *p) {
     if(c==NULL) {
         res = 0;
     } else if(strcmp(c->produto,p)==0) {
-        if((c->normal->nvendas > 0) || (c->promocao->nvendas>0)) {
+        if((c->normal->nvendas > 0) || (c->promocao->nvendas > 0)) {
             res = 1;
         } else {
             res = 0;
@@ -122,44 +122,12 @@ void numeroVendasETotalFacturado(Contabilidade c, int *v, double *f) {
     Contabilidade aux = c;
     
     if(aux!=NULL) {
-        (*v) += aux->normal->nvendas + aux->promocao->nvendas;
+        if(produtoFoiComprado(aux,aux->produto)) (*v)++;
         (*f) += aux->normal->facturado + aux->promocao->facturado;
         numeroVendasETotalFacturado(aux->esq,v,f);
         numeroVendasETotalFacturado(aux->dir,v,f);
     }
     
-}
-
-/**
- * Função auxiliar de impressão do modo
- *      ### APAGAR DEPOIS
- * @param m
- */
-void imprimeModo(Modo m) {
-    if(m!=NULL) {
-        printf("\t\tVENDAS: %d FACTURADO: %f\n",m->nvendas,m->facturado);
-    }
-}
-
-/**
- * Função de impressão AUXILIAR
- *      ### APAGAR DEPOIS
- * @param c
- */
-void imprimeContabilidade(Contabilidade c) {
-    if(c != NULL) {
-        imprimeContabilidade(c->esq);
-        
-          puts("----------------------------------------------------");
-        printf("PRODUTO: %s\n",c->produto);
-        printf("\tNORMAL:\n");
-        imprimeModo(c->normal);
-        printf("\tPROMOCAO:\n");
-        imprimeModo(c->promocao);
-          puts("----------------------------------------------------");
-          
-        imprimeContabilidade(c->dir);
-    }
 }
 
 /*************

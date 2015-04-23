@@ -29,9 +29,7 @@ int produtoFoiComprado(Contabilidade c, char *p);
 
 void numeroVendasETotalFacturado(Contabilidade c, int *v, double *f);
 
-void imprimeModo(Modo m);
-
-void imprimeContabilidade(Contabilidade c);
+int tamanho(Contabilidade c);
 
 /* Gestão da AVL */
 
