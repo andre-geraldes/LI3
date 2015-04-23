@@ -146,6 +146,8 @@ ListaLigada listaClientesCompraramProduto(Compras c, ListaLigada l, char *p) {
     return l;
 }
 
+
+
 /*************
  Gestão da AVL
  *************/

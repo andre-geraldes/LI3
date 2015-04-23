@@ -16,7 +16,7 @@ void imprimeLista(ListaLigada ll){
 	while(key != 'q'){
 		if(key == 'n'){
 			system("clear");
-			for(i = 0; i < 40 && l->prox != NULL; i++){
+			for(i = 0; i < 40 && l; i++){
 				printf("|  %s  |\n", l->codigo);
 				l = l->prox;
 				total++;
@@ -26,17 +26,29 @@ void imprimeLista(ListaLigada ll){
 			printf("\'n\' para próximo, \'p\' para anterior, \'q\' para sair\n");
 		}
 		else if(key == 'p'){
-			system("clear");
-			for(i = 0; i < 80 && l->ant != NULL; i++){
-				l = l->ant;
-				if(total > 1) total--;
+			if(total > 40){ 
+				system("clear");
+				if(total >= 80){
+					for(i = 0; i < 80 && l; i++){
+					l = l->ant;
+				}
+				}
+				for(i = 0; i < 40 && l; i++){
+					printf("|  %s  |\n", l->codigo);
+					if(total >1) total--;
+					l = l->prox;
+				}
+				if(h > 1){
+					h--;
+				}
+			else {
+				if(total == 40) l = ll;
+				for(i = 0; i < 40 && l; i++){
+					printf("|  %s  |\n", l->codigo);
+					l = l->prox;
+					total++;
+				}
 			}
-			for(i = 0; i < 40 && l->prox != NULL; i++){
-				printf("|  %s  |\n", l->codigo);
-				l = l->prox;
-			}
-			if(h > 1){
-				h--;
 			}
 			printf("Página: %d de %d | Lidos: %d de %d |\n",h, nrpag, total, nelem);
 			printf("\'n\' para próximo, \'p\' para anterior, \'q\' para sair\n");
