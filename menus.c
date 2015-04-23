@@ -49,11 +49,20 @@ void carregaTextArt(char *nome_ficheiro) {
 }
 
 void imprimeNumQuery(int nq) {
+<<<<<<< HEAD
     system("clear");
       puts("\t==========================");
     printf("\t|        QUERY %2d        |\n",nq);
       puts("\t==========================\n");
+=======
+      puts("==========================");
+    printf("|        QUERY %2d        |\n",nq);
+      puts("==========================");
+>>>>>>> c57bbc1804c671b8629154e3b064c5b3d549ca01
 }
+<<<<<<< Updated upstream
 
 
 
+=======
+>>>>>>> Stashed changes

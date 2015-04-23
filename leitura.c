@@ -99,7 +99,13 @@ int leitura (char * nome_fich) {
 
 void query1(){
 	char c;
+<<<<<<< HEAD
         
+=======
+	system("clear");
+	imprimeNumQuery(1);
+
+>>>>>>> c57bbc1804c671b8629154e3b064c5b3d549ca01
 	leitura("FichClientes.txt");
 	leitura("FichProdutos.txt");
 	leitura("Compras.txt");
@@ -112,7 +118,13 @@ void query2(){
 	char c = '1';
 	ListaLigada l = NULL;
 
+<<<<<<< HEAD
 	imprimeNumQuery(2);
+=======
+	system("clear");
+	imprimeNumQuery(2);
+
+>>>>>>> c57bbc1804c671b8629154e3b064c5b3d549ca01
 	puts("Qual a letra inicial do código?");
 
 	scanf(" %c",&c);
@@ -136,7 +148,13 @@ void query3(){
 	char c;
 	Contabilidade aux;
 
+<<<<<<< HEAD
 	imprimeNumQuery(3);
+=======
+	system("clear");
+	imprimeNumQuery(3);
+
+>>>>>>> c57bbc1804c671b8629154e3b064c5b3d549ca01
 	puts("Qual o mês?");
 
 	scanf("%d",&mes);
@@ -170,8 +188,15 @@ void query3(){
 void query4(){
 	ListaLigada l = NULL, prod = NULL;
 	int i, j, flag = 0;
+<<<<<<< HEAD
         
         imprimeNumQuery(4);
+=======
+
+	system("clear");
+	imprimeNumQuery(4);
+
+>>>>>>> c57bbc1804c671b8629154e3b064c5b3d549ca01
 	for(i = 0; i < 26; i++){
 		prod = produtosParaLista(prod, produtos[i]);
 	}
@@ -197,7 +222,13 @@ void query5(){
 	Compras aux = NULL;
 	ListaCompras auxcompras = NULL;
 
+<<<<<<< HEAD
 	imprimeNumQuery(5);
+=======
+	system("clear");
+	imprimeNumQuery(5);
+
+>>>>>>> c57bbc1804c671b8629154e3b064c5b3d549ca01
 	puts("Qual o Cliente?");
 	scanf("%s",codigo);
 	while(!existeC(clientes[codigo[0]-'A'], codigo)){
@@ -240,7 +271,13 @@ void query6(){
 	char c = '1';
 	ListaLigada l = NULL;
 
+<<<<<<< HEAD
         imprimeNumQuery(6);
+=======
+	system("clear");
+	imprimeNumQuery(6);
+
+>>>>>>> c57bbc1804c671b8629154e3b064c5b3d549ca01
 	puts("Qual a letra inicial do Cliente?");
 	scanf(" %c",&c);
 	while(c < 'A' || c > 'z') {
@@ -262,6 +299,7 @@ void query6(){
 
 }
 
+<<<<<<< HEAD
 void query7() {
     int li,ls,i,valido=0,nvendas=0;
     double facturado=0;
@@ -291,6 +329,17 @@ void query7() {
     c = getchar();
     c = getchar();
 }
+=======
+void query7(){
+	int mes1, mes2;
+
+	system("clear");
+	imprimeNumQuery(7);
+
+
+}
+
+>>>>>>> c57bbc1804c671b8629154e3b064c5b3d549ca01
 
 int main (){
 	int i, num = 1, lido=0;
@@ -307,6 +356,7 @@ int main (){
    	num = menuOpcoes();
     	printf("Opção: %d\n",num);
     	switch(num){
+<<<<<<< HEAD
     		case 1: {
                     /* Falta o caso de reler */
                     query1(); 
@@ -344,14 +394,19 @@ int main (){
                     if(lido) query7();
                     else puts("Ainda não foi feita a leitura dos ficheiros.");
                 } break;
+=======
+    		case 1: query1(); break;
+			case 2: query2(); break;
+			case 3: query3(); break;
+			case 4: query4(); break;
+			case 5: query5(); break;
+			case 6: query6(); break;
+			case 7: query7(); break;
+>>>>>>> c57bbc1804c671b8629154e3b064c5b3d549ca01
     	}
 	
     }
 
 
-
-	for(i = 0; i < 12; i++){
-		compras[i] = balancearCP(compras[i]);
-	}
 	return 0;
 }
