@@ -19,8 +19,8 @@ void imprimeLista(ListaLigada ll){
 			for(i = 0; i < 40 && l->prox != NULL; i++){
 				printf("|  %s  |\n", l->codigo);
 				l = l->prox;
+				total++;
 			}
-			total += 40;
 			h++;
 			printf("Página: %d de %d | Lidos: %d de %d |\n",h, nrpag, total, nelem);
 			printf("\'n\' para próximo, \'p\' para anterior, \'q\' para sair\n");
@@ -29,13 +29,13 @@ void imprimeLista(ListaLigada ll){
 			system("clear");
 			for(i = 0; i < 80 && l->ant != NULL; i++){
 				l = l->ant;
+				if(total > 1) total--;
 			}
 			for(i = 0; i < 40 && l->prox != NULL; i++){
 				printf("|  %s  |\n", l->codigo);
 				l = l->prox;
 			}
 			if(h > 1){
-				total -= 40;
 				h--;
 			}
 			printf("Página: %d de %d | Lidos: %d de %d |\n",h, nrpag, total, nelem);

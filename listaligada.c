@@ -47,17 +47,16 @@ ListaLigada insereElemNaoRepetido(ListaLigada l, char *c) {
     int encontrou = 0;
     ListaLigada aux = l;
     
-    if(l == NULL){
-        l = initLista(l,c);
-    } else {
-        while(aux && !encontrou){
-            if(strcmp(aux->codigo,c) == 0) encontrou = 1;
-            aux = aux->prox;
-        }
-        if(!encontrou){
-            l = insereElemento(l,c);
-        }
+    while(!encontrou && aux){
+        if(strcmp(aux->codigo,c) == 0) encontrou = 1;
+        aux = aux->prox;
     }
+
+    if(!encontrou){
+        l = insereElemento(l,c);
+        printf("%s\n",l->codigo);
+    }
+    
     return l;
 }
 

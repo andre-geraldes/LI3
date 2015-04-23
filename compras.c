@@ -113,12 +113,10 @@ int clienteComprouProduto(ListaCompras l, char *p) {
     int encontrou = 0;
     ListaCompras laux = l;
     
-    if(l==NULL) {
-        return l;
-    } else {
+    if(l != NULL) {
         /* Tem de verificar se é modo N ou P*/
-        while(laux && !encontrou) {
-            if(strcmp(l->produto,p)==0){
+        while(!encontrou && laux) {
+            if(strcmp(laux->produto,p)==0){
                 encontrou = 1;
             }
             laux = laux->prox;

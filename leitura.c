@@ -272,7 +272,6 @@ void query7() {
     int li,ls,i,valido=0,nvendas=0;
     double facturado=0;
     char c;
-    Contabilidade aux;
     
     imprimeNumQuery(7);
     while(!valido) {
