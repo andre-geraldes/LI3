@@ -30,8 +30,6 @@ int produtoFoiComprado(Contabilidade c, char *p);
 
 void numeroVendasETotalFacturado(Contabilidade c, int *v, double *f);
 
-int tamanho(Contabilidade c);
-
 /* Gestão da AVL */
 
 int alturaCT(Contabilidade nodo);

@@ -37,7 +37,24 @@ ListaLigada insereElemento(ListaLigada l, char *c) {
     return l;
 }
 
-int comprimentoListaLigada(ListaLigada l){
+ListaLigada insereNaoRepetido(ListaLigada l, char *c) {
+    int encontrou = 0;
+    ListaLigada aux = l;
+    if(l == NULL){
+        l = initLista(l,c);
+    } else {
+        while(aux && !encontrou){
+            if(strcmp(aux->codigo,c) == 0) encontrou = 1;
+            aux = aux->prox;
+        }
+        if(!encontrou){
+            l = insereElemento(l,c);
+        }
+    }
+    return l;
+}
+
+int comprimentoListaLigada(ListaLigada l) {
     int c = 0;
     while(l != NULL){
         c++;

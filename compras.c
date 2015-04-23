@@ -110,20 +110,14 @@ int comprimentoListaCompras(ListaCompras l) {
  * @param p
  * @return 
  */
-int clienteComprouProduto(ListaCompras l, char *p) {
+ListaLigada clienteComprouProduto(Compras c, ListaLigada l, char *p) {
     int res=0;
-    ListaCompras laux;
+    ListaLigada laux = l;
     
-    if(l==NULL) {
-        res=0;
+    if(c == NULL) {
+        return l;
     } else {
-        laux = l;
-        while(laux) {
-            if(strcmp(laux->produto,p)==0) {
-                res++;
-            }
-            laux = laux->prox;
-        }
+        if()   
     }
     
     return res;

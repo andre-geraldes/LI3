@@ -298,16 +298,21 @@ void query7() {
 }
 
 void query8() {
-    char cod[7];
+    int i;
+    char codigo[7];
+    ListaLigada clientesn = NULL, clientep = NULL;
     imprimeNumQuery(8);
     
-    puts("Insira o código de produto:");
-    scanf("%s",cod);
-    while(!existeP(produtos[cod[0]],cod)) {
-        puts(" *** Códio inválido: inexistente. Insira de novo ****");
-        scanf("%s",cod);
-    } 
+    puts("Insira o código do produto:");
+	scanf("%s",codigo);
+	while(!existeP(produtos[codigo[0]-'A'], codigo)){
+		puts("Código inválido, insira outra vez:");
+		scanf("%s",codigo);
+	}
     
+    for(i = 0; i < 12; i++){
+    	
+    }
     
 }
 
@@ -334,30 +339,24 @@ int main (){
                 }    
 		case 2: {
                     if(lido) query2();
-                    else puts("Ainda não foi feita a leitura dos ficheiros.");
                 } break;        
 		case 3: {
                     if(lido) query3();
-                    else puts("Ainda não foi feita a leitura dos ficheiros.");
                 } break;
 		case 4: {
                     if(lido) query4();
-                    else puts("Ainda não foi feita a leitura dos ficheiros.");
                 } break;
                 /* OPção de guardar em ficheiro */
                 case 5: {
                     if(lido) query5();
-                    else puts("Ainda não foi feita a leitura dos ficheiros.");
                 } break;
                 
 		case 6: {
                     if(lido) query6();
-                    else puts("Ainda não foi feita a leitura dos ficheiros.");
                 } break;
                 
                 case 7: {
                     if(lido) query7();
-                    else puts("Ainda não foi feita a leitura dos ficheiros.");
                 } break;
                 
                 case 8: {
