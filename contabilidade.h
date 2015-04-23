@@ -7,6 +7,7 @@
 
 typedef struct modo {
     int nvendas;
+    int ncompras;
     double facturado;
 } *Modo;
 

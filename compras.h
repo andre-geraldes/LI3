@@ -29,9 +29,7 @@ Compras insereCompra(Compras c, char *cl, char *p, char m, double pr, int q);
 
 int comprimentoListaCompras(ListaCompras l);
 
-void imprimeListaCompras(ListaCompras l);
-
-void imprimeCompras(Compras c);
+int clienteComprouProduto(ListaCompras l, char *p);
 
 /* Gestão da AVL */
 

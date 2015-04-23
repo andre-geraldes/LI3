@@ -297,6 +297,20 @@ void query7() {
     c = getchar();
 }
 
+void query8() {
+    char cod[7];
+    imprimeNumQuery(8);
+    
+    puts("Insira o código de produto:");
+    scanf("%s",cod);
+    while(!existeP(produtos[cod[0]],cod)) {
+        puts(" *** Códio inválido: inexistente. Insira de novo ****");
+        scanf("%s",cod);
+    } 
+    
+    
+}
+
 int main (){
 	int i, num = 1, lido=0;
 	
@@ -344,6 +358,10 @@ int main (){
                 case 7: {
                     if(lido) query7();
                     else puts("Ainda não foi feita a leitura dos ficheiros.");
+                } break;
+                
+                case 8: {
+                    if(lido) query8();
                 } break;
     	}
 	

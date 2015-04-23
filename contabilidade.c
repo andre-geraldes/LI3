@@ -10,6 +10,7 @@ Modo initModo(Modo m) {
         m = (Modo) malloc(sizeof(struct modo));
         m->nvendas = 0;
         m->facturado = 0;
+        m->ncompras = 0;
     }
     return m;
 }
@@ -70,9 +71,11 @@ Contabilidade actualizaContabilidade(Contabilidade c, char *p, char m, double pr
     if(c!=NULL) {
         if (strcmp(c->produto,p)==0) {
             if(m=='N') {
+                c->normal->ncompras += 1;
                 c->normal->nvendas += q;
                 c->normal->facturado += q*pr;
             } else if (m=='P') {
+                c->promocao->ncompras += 1;
                 c->promocao->nvendas += q;
                 c->promocao->facturado += q*pr;  
             }        
@@ -119,13 +122,11 @@ int produtoFoiComprado(Contabilidade c, char *p) {
  * @param f
  */
 void numeroVendasETotalFacturado(Contabilidade c, int *v, double *f) {
-    Contabilidade aux = c;
-    
-    if(aux!=NULL) {
-        if(produtoFoiComprado(aux,aux->produto)) (*v)++;
-        (*f) += aux->normal->facturado + aux->promocao->facturado;
-        numeroVendasETotalFacturado(aux->esq,v,f);
-        numeroVendasETotalFacturado(aux->dir,v,f);
+    if(c!=NULL) {
+        (*v) += c->normal->ncompras + c->promocao->ncompras;
+        (*f) += c->normal->facturado + c->promocao->facturado;
+        numeroVendasETotalFacturado(c->esq,v,f);
+        numeroVendasETotalFacturado(c->dir,v,f);
     }
     
 }

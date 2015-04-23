@@ -101,32 +101,32 @@ int comprimentoListaCompras(ListaCompras l) {
     return res;
 }
 
-/**
- * NOTA: Função de teste de impressão AUXILIARES
- *       ### APAGAR DEPOIS ### 
- * @param l
- */
-void imprimeListaCompras(ListaCompras l) {
-    if(l!=NULL) {
-        printf("\tPRODUTO: %s MODO: %c PRECO: %f QUANTIDADE: %d\n",l->produto,l->modo,l->preco,l->quantidade);
-        imprimeListaCompras(l->prox);
-    }   
-}
+
 
 /**
- * NOTA: Função de teste de impressão AUXILIARES 
- *       ### APAGAR DEPOIS ###
- * @param c
+ * Retorna 0 se nao comprou
+ * Retorna N se comprou N vezes
+ * @param l
+ * @param p
+ * @return 
  */
-void imprimeCompras(Compras c) {
-    if(c!=NULL) {
-        imprimeCompras(c->esq);
-          puts("---------------");
-        printf("CLIENTE: %s COMPRAS: %d\n",c->cliente,comprimentoListaCompras(c->lista));
-        imprimeListaCompras(c->lista);
-          puts("---------------");
-        imprimeCompras(c->dir);
+int clienteComprouProduto(ListaCompras l, char *p) {
+    int res=0;
+    ListaCompras laux;
+    
+    if(l==NULL) {
+        res=0;
+    } else {
+        laux = l;
+        while(laux) {
+            if(strcmp(laux->produto,p)==0) {
+                res++;
+            }
+            laux = laux->prox;
+        }
     }
+    
+    return res;
 }
 
 /*************
