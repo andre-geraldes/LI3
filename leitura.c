@@ -296,6 +296,7 @@ void query7() {
     c = getchar();
 }
 
+/* Corrigir a parte N e P */
 void query8() {
     int i;
     char codigo[7];
@@ -313,9 +314,40 @@ void query8() {
     
     for(i = 0; i < 12; i++){
         caux = compras[i];
-    	clientesN = listaClientesCompraramProduto(caux,clientesN,codigo);
+    	clientesN = listaClientesCompraramProduto(caux,clientesN,'N',codigo);
+        clientesP = listaClientesCompraramProduto(caux,clientesP,'P',codigo);
     }
     imprimeLista(clientesN);
+    imprimeLista(clientesP);
+}
+
+void query9() {
+    char codigo[6];
+    int mes;
+    ListaLigada produtos = NULL;
+    ListaCompras lc=NULL,lcsr=NULL,lco=NULL;
+    
+    imprimeNumQuery(9);
+    
+    puts("Qual o Cliente?");
+    scanf("%s",codigo);
+    while(!existeC(clientes[codigo[0]-'A'], codigo)){
+	puts("Cliente inválido, insira outra vez:");
+	scanf("%s",codigo);
+    }
+    puts("Insira o mês:");
+    scanf("%d",&mes);
+    while(mes<1 || mes>12){
+        puts("Mês inválido, insira outra vez:");
+	scanf("%d",&mes);
+    }
+   
+    lc = devolveListaComprasCliente(compras[mes-1],lc,codigo); 
+    lcsr = juntaComprasPorProduto(lcsr,lc); 
+    lco = insereComprasOrdenadas(lco,lcsr);    
+    produtos = listaLigadaDeCompras(lco,produtos); 
+    
+    imprimeLista(produtos);
 }
 
 int main (){
@@ -364,6 +396,10 @@ int main (){
                 case 8: {
                     if(lido) query8();
                 } break;
+                
+                case 9: {
+                    if(lido) query9();
+                }
     	}
 	
     }

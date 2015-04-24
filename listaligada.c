@@ -54,7 +54,6 @@ ListaLigada insereElemNaoRepetido(ListaLigada l, char *c) {
 
     if(!encontrou){
         l = insereElemento(l,c);
-        printf("%s\n",l->codigo);
     }
     
     return l;

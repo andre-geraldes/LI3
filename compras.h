@@ -32,7 +32,19 @@ int comprimentoListaCompras(ListaCompras l);
 
 int clienteComprouProduto(ListaCompras l, char *p);
 
-ListaLigada listaClientesCompraramProduto(Compras c, ListaLigada l, char *p);
+int clienteComprouProdutoModo(ListaCompras l,char *p, char m);
+
+ListaLigada listaClientesCompraramProduto(Compras c, ListaLigada l, char m, char *p);
+
+ListaCompras juntaComprasPorProduto(ListaCompras l, ListaCompras res);
+
+ListaCompras actualizaListaCompras(ListaCompras l, int q, char *p);
+
+ListaCompras insereComprasOrdenadas(ListaCompras l, ListaCompras res);
+
+ListaLigada listaLigadaDeCompras(ListaCompras l, ListaLigada r);
+
+ListaCompras devolveListaComprasCliente(Compras c, ListaCompras l, char *cl);
 
 /* Gestão da AVL */
 

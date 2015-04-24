@@ -20,8 +20,10 @@ int menuOpcoes() {
         puts("Query 13 - Dado um código de cliente, determina os três produtos que mais comprou durante o ano.");
         puts("Query 14 - Determina o número de clientes que não realizaram compras e os produtos que ninguém comprou.");
         puts("Sair  15\n");
+        
         printf("Escolha uma opção: ");
         scanf("%d",&op);
+        
         if(op<1 || op>15) {
             puts("\n**** Opção inválida ***\n");
         }

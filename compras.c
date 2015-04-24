@@ -127,26 +127,173 @@ int clienteComprouProduto(ListaCompras l, char *p) {
 }
 
 /**
+ * Retorna 0 se nao comprou
+ * Retorna 1 se comprou com o modo indicado
+ * @param l
+ * @param p
+ * @return 
+ */
+int clienteComprouProdutoModo(ListaCompras l,char *p, char m){
+    int encontrou = 0;
+    ListaCompras laux = l;
+    
+    if(l != NULL) {
+        /* Tem de verificar se é modo N ou P*/
+        while(!encontrou && laux) {
+            if(strcmp(laux->produto,p)==0 && laux->modo == m){
+                encontrou = 1;
+            }
+            laux = laux->prox;
+        }
+    }
+    /* Alternar res*/
+    return encontrou;
+}
+
+/**
  * Retorna lista dos clientes que compraram um produto
  * @param c
  * @param l
  * @param p
  * @return 
  */
-ListaLigada listaClientesCompraramProduto(Compras c, ListaLigada l, char *p) {
+ListaLigada listaClientesCompraramProduto(Compras c, ListaLigada l, char m, char *p) {
     if(c!=NULL){
         /* Se o cliente comprou o produto */
-        if(clienteComprouProduto(c->lista,p)) {
+        if(clienteComprouProdutoModo(c->lista,p,m)) {
             /* Insere-o na lista ligada */
             l = insereElemNaoRepetido(l,c->cliente);
         }
-        l = listaClientesCompraramProduto(c->esq,l,p);
-        l = listaClientesCompraramProduto(c->dir,l,p);
+        l = listaClientesCompraramProduto(c->esq,l,m,p);
+        l = listaClientesCompraramProduto(c->dir,l,m,p);
     }
     return l;
 }
 
 
+/**
+ * Dada uma lista de compras associa pelos produtos somando as 
+ * quantidades respetivas
+ * NOTA: retorna uma lista de compras sem repetidos
+ * @param l
+ * @return 
+ */
+ListaCompras juntaComprasPorProduto(ListaCompras res, ListaCompras l) {
+    ListaCompras laux = l;
+    
+    if(l!=NULL) {
+        res = insereElemListaCompras(res,laux->produto,laux->modo,laux->preco,laux->quantidade);
+        laux = laux->prox;
+        while(laux) {
+            /* Se RES já tem o produto actual */
+            if(clienteComprouProduto(res,laux->produto)) {
+                /* actualiza */
+                res = actualizaListaCompras(res,laux->quantidade,laux->produto);
+            } else {
+                /* Senão adiciona novo produto a RES */
+                res = insereElemListaCompras(res,laux->produto,laux->modo,laux->preco,laux->quantidade);
+            }
+            laux = laux->prox;
+        }
+    }
+    
+    return res;
+}
+
+/**
+ * Recece uma lista de compras sem produtos repetidos e insere-os numa nova lista
+ * de ficando ordenados de forma decrescente tendo em conta a quantidade
+ * @param l
+ * @param res
+ * @return 
+ */
+ListaCompras insereComprasOrdenadas(ListaCompras res, ListaCompras l) {
+    ListaCompras laux=l;
+    ListaCompras raux,novo;
+    
+    if(l!=NULL) {
+        while(laux) {
+            raux = res;
+            /* insere na cabeça no caso de ser maior ou igual */
+            if(res == NULL || laux->quantidade <= res->quantidade) {
+                res = insereElemListaCompras(res,laux->produto,laux->modo,laux->preco,laux->quantidade);
+            } else {
+                /* percorre até encontrar uma quantidade menor */
+                while(raux->prox != NULL && raux->prox->quantidade <= laux->quantidade) {
+                    raux = raux->prox;
+                }
+                /* insere no fim/meio da lista */
+                novo = (ListaCompras) malloc(sizeof(struct listaCompras));
+                    strcpy(novo->produto,laux->produto);
+                    novo->modo = laux->modo;
+                    novo->preco = laux->preco;
+                    novo->quantidade = laux->quantidade;
+                    novo->prox = raux->prox;
+                    raux->prox = novo;
+            }
+            laux = laux->prox;
+        }
+    }
+    return res;
+}
+
+/**
+ * Constroi uma lista ligada com os códigos de compras 
+ * @param l
+ * @param r
+ * @return 
+ */
+ListaLigada listaLigadaDeCompras(ListaCompras l, ListaLigada r) {
+    ListaCompras laux = l;
+    
+    if(l!=NULL) {
+        while(laux) {
+            r = insereElemento(r,laux->produto);
+            laux = laux->prox;
+        }
+    }
+    return r;
+}
+
+/**
+ * Dada uma lista de compras actualiza-a de modo a que se houver uma
+ * compra com o mesmo produto, soma os valores das quantidades
+ * @param r
+ * @param l
+ * @return 
+ */
+ListaCompras actualizaListaCompras(ListaCompras l, int q, char *p){
+   ListaCompras laux = l;
+   int actualizado = 0;
+   
+   while(laux && !actualizado) {
+       if(strcmp(laux->produto,p)==0){
+           laux->quantidade += q;
+           actualizado = 1;
+       }
+       laux = laux->prox;
+   }
+   return l;
+}
+
+/**
+ * Devolve as compras de um cliente num dado mês
+ * @param c
+ * @param cl
+ * @return 
+ */
+ListaCompras devolveListaComprasCliente(Compras c, ListaCompras aux, char *cl) {
+    if(c!=NULL) {
+        if(strcmp(c->cliente,cl)==0) {
+            aux = c->lista;
+        } else if(strcmp(c->cliente,cl)>0) {
+            aux = devolveListaComprasCliente(c->esq,aux,cl);
+        } else if(strcmp(c->cliente,cl)<0) {
+            aux = devolveListaComprasCliente(c->dir,aux,cl);
+        }
+    }
+    return aux;
+}
 
 /*************
  Gestão da AVL
