@@ -197,9 +197,10 @@ void query4(){
 void query5(){
 	char codigo[6];
 	int i, total = 0;
-	char c;
+	char c, l;
 	Compras aux = NULL;
 	ListaCompras auxcompras = NULL;
+	FILE * file;
 
 	imprimeNumQuery(5);
 
@@ -236,6 +237,43 @@ void query5(){
 		total = 0;
 	}
 	puts("---------------------");
+	puts("Pretende guardar esta tabela? (S ou N)");
+	scanf(" %c",&l);
+	while( l != 'S' && l !='N') {
+		puts("Letra inválida, insira outra vez:");
+		scanf(" %c",&l);
+	}
+
+	if(l == 'S'){
+		file = fopen("query5.txt", "w+");
+		fprintf(file,"---------------------\n");
+		fprintf(file,"|  Cliente: %s   |\n",codigo);
+		fprintf(file,"---------------------\n");
+		fprintf(file,"|  Mês | Nr compras |\n");
+		fprintf(file,"---------------------\n");
+		for(i = 0; i < 12; i++){
+			aux = compras[i];
+		
+			while(aux && strcmp(aux->cliente,codigo) != 0){
+				if(strcmp(aux->cliente,codigo) > 0) aux = aux->esq;
+				else aux = aux->dir;
+			}
+
+			if(aux){
+				auxcompras = aux->lista;
+				while(auxcompras){
+					total += auxcompras->quantidade;
+				auxcompras = auxcompras->prox;
+			}
+		}
+	
+		fprintf(file,"|  %2d  |     %2d     |\n",i+1,total);
+		total = 0;
+		}
+		fprintf(file,"---------------------\n");
+		fclose(file);
+	}
+
 	c = getchar();
 	c = getchar();
 
