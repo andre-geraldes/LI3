@@ -24,4 +24,10 @@ int comprimentoListaLigada(ListaLigada l);
 
 ListaLigada insereElemNaoRepetido(ListaLigada l, char *c);
 
+int existeElemento(ListaLigada l, char *c);
+
+ListaLigada removeElemento(ListaLigada l, char *c);
+
+ListaLigada interseccaoListas(ListaLigada a, ListaLigada b);
+
 #endif

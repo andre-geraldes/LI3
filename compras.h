@@ -46,6 +46,12 @@ ListaLigada listaLigadaDeCompras(ListaCompras l, ListaLigada r);
 
 ListaCompras devolveListaComprasCliente(Compras c, ListaCompras l, char *cl);
 
+ListaLigada comprasDoClientesParaLista(ListaLigada l, Compras c);
+
+int contaComprasMes(Compras c);
+
+int contaClientes(Compras c);
+
 /* Gestão da AVL */
 
 int alturaCP(Compras nodo);

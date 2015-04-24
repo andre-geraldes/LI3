@@ -334,7 +334,6 @@ void query7() {
     c = getchar();
 }
 
-/* Corrigir a parte N e P */
 void query8() {
     int i;
     char codigo[7];
@@ -388,6 +387,51 @@ void query9() {
     imprimeLista(produtos);
 }
 
+void query10(){
+	int i;
+	ListaLigada clientes = NULL, aux = NULL, h = NULL;
+	imprimeNumQuery(10);
+
+	/*
+	clientes = comprasDoClientesParaLista(clientes, compras[0]);
+	for(i = 1; i < 12; i++){
+		aux = comprasDoClientesParaLista(aux, compras[i]);
+		h = clientes;
+		while(h){
+			if(!existeElemento(aux,h->codigo)) {
+				clientes = removeElemento(clientes,h->codigo);
+			}
+			h = h->prox;
+		}
+	}
+	*/
+
+	h = comprasDoClientesParaLista(clientes, compras[0]);
+	aux = comprasDoClientesParaLista(clientes, compras[1]);
+	clientes = interseccaoListas(h,aux);
+	for(i=2; i<12; i++){
+		aux = comprasDoClientesParaLista(clientes, compras[i]);
+		clientes = interseccaoListas(clientes,aux);
+	}
+
+	imprimeLista(clientes);
+
+}
+
+void query11(){
+	FILE * file;
+	int i;
+	imprimeNumQuery(11);
+
+	file = fopen("query11.csv", "w+");
+	fprintf(file,"\"Mes\",\"#Compras\",\"#Clientes\"\n");
+	for(i = 0; i < 12; i++){
+		fprintf(file, "\"%d\",\"%d\",\"%d\"", i+1,contaComprasMes(compras[i]), contaClientes(compras[i]));
+		if(i != 11) fprintf(file, "\n");
+	}
+	fclose(file);
+}
+
 int main (){
 	int i, num = 1, lido=0;
 	
@@ -437,6 +481,14 @@ int main (){
                 
                 case 9: {
                     if(lido) query9();
+                }
+
+                case 10: {
+                    if(lido) query10();
+                }
+
+                case 11: {
+                    if(lido) query11();
                 }
     	}
 	

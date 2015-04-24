@@ -295,6 +295,25 @@ ListaCompras devolveListaComprasCliente(Compras c, ListaCompras aux, char *cl) {
     return aux;
 }
 
+ListaLigada comprasDoClientesParaLista(ListaLigada l, Compras c) {
+    if(c!=NULL) {
+        l = comprasDoClientesParaLista(l,c->dir);
+        l = insereElemento(l,c->cliente);
+        l = comprasDoClientesParaLista(l,c->esq);
+    }
+    return l;
+}
+
+int contaClientes(Compras c){
+    if(c == NULL) return 0;
+    return 1 + contaClientes(c->esq) + contaClientes(c->dir);
+}
+
+int contaComprasMes(Compras c){
+    if(c == NULL) return 0;
+    return comprimentoListaCompras(c->lista) + contaComprasMes(c->esq) + contaComprasMes(c->dir);
+}
+
 /*************
  Gestão da AVL
  *************/

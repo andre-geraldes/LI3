@@ -59,6 +59,58 @@ ListaLigada insereElemNaoRepetido(ListaLigada l, char *c) {
     return l;
 }
 
+int existeElemento(ListaLigada l, char *c){
+    int res = 0;
+    ListaLigada aux = l;
+    while(!res && aux){
+        if(strcmp(aux->codigo,c) == 0) res = 1;
+        aux = aux->prox;
+    }
+
+    return res;
+}
+
+/* Cria uma nova lista inserindo aqueles que são diferentes que 
+* são para remover */
+ListaLigada removeElemento(ListaLigada l, char *c){
+    int removeu = 0;
+    ListaLigada aux = l, novo = NULL;
+    
+    /* Caso o elemento seja o 1o da lista */
+    if(strcmp(aux->codigo, c) == 0){
+        novo = aux;
+        aux = aux->prox;
+        free(novo);
+        aux->ant = NULL;
+        l = aux;
+    }
+    else {
+        while(aux && !removeu){
+            if(strcmp(aux->prox->codigo,c) == 0){
+                novo = aux->prox;
+                aux->prox = aux->prox->prox;
+                if(aux->prox) aux->prox->ant = aux;
+                free(novo);
+                removeu = 1;
+            }
+            aux = aux->prox;
+        }
+    }
+
+    return l;
+}
+
+ListaLigada interseccaoListas(ListaLigada a, ListaLigada b){
+    ListaLigada result = NULL, aux = a;
+
+    while(aux){
+        if(existeElemento(b,aux->codigo)) result = insereElemento(result,aux->codigo);
+        aux = aux->prox;
+    }
+
+    return result;
+}
+
 /**
  * Devolve o comprimento da lista ligada
  * @param l
