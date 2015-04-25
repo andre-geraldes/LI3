@@ -369,14 +369,18 @@ int contaComprasMes(Compras c){
  */
 ListaLigada tresProdutosMaisComprados(ListaCompras l, ListaLigada p, int *max1, int *max2, int *max3){
     int i,m1,m2,m3;
-    char *produto = (char *) malloc(sizeof());
+    char *produto;
     ListaCompras laux;
+    
+    
+    produto = (char *) malloc(7*sizeof(char));
     
     for(i=0;i<3;i++){
         laux = l;
         if(i==0) {
             /* primeiro maximo */
             m1 = 0;
+            produto=NULL;
             while(laux) {
                 if(laux->quantidade > m1) {
                     m1 = laux->quantidade;
@@ -384,10 +388,15 @@ ListaLigada tresProdutosMaisComprados(ListaCompras l, ListaLigada p, int *max1, 
                 }
                 laux = laux->prox;
             }
-            p = insereElemento(p,produto);
+            (*max1) = m1;
+            if(produto) {
+                p = insereElemento(p,produto);
+            }
+            
         } else if(i==1) {
             /* segundo maximo */
             m2 = 0;
+            produto=NULL;
             while(laux) {
                 if(laux->quantidade > m2 && !existeElemento(p,laux->produto)) {
                     m2 = laux->quantidade;
@@ -395,11 +404,15 @@ ListaLigada tresProdutosMaisComprados(ListaCompras l, ListaLigada p, int *max1, 
                 }
                 laux = laux->prox;
             }
-            p = insereElemento(p,produto);
+            (*max2) = m2;
+            if(produto) {
+                p = insereElemento(p,produto);
+            }
             
         } else {
             /* terceiro maximo */
             m3 = 0;
+            produto=NULL;
             while(laux) {
                 if(laux->quantidade > m3 && !existeElemento(p,laux->produto)) {
                     m3 = laux->quantidade;
@@ -407,9 +420,13 @@ ListaLigada tresProdutosMaisComprados(ListaCompras l, ListaLigada p, int *max1, 
                 }
                 laux = laux->prox;
             }
-            p = insereElemento(p,produto);
+            (*max3) = m3;
+            if(produto) {
+                p = insereElemento(p,produto);
+            }
         }
     }
+    free(produto);
     return p;
 }
 

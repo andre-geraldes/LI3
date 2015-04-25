@@ -486,25 +486,31 @@ void query13() {
     for(i=0;i<12;i++) {
         lista[i] = devolveListaComprasCliente(compras[i],lista[i],cliente);
     }
-    /* */
+    
     res[0] = juntaComprasPorProduto(lista[0],lista[1]);
     for(i=1;i<11;i++) {
             res[i] = juntaComprasPorProduto(res[i-1],lista[i+1]);
     }
+    
     aux = res[10];
-    
-    while(aux) {
-        printf("P: %s Q: %d\n",aux->produto,aux->quantidade);
-        aux = aux->prox;
-    }
-    
-    puts("ok");
     produtos = tresProdutosMaisComprados(aux,produtos,&m1,&m2,&m3);
     
-    printf("Os produtos mais comprados pelo cliente %s foram:\n",cliente);
-    while(produtos) {
-        printf("Produto: %s\n",produtos->codigo);
+    /* lista de forma crescente */
+    while(produtos->prox != NULL) {
         produtos = produtos->prox;
+    }
+    
+    printf("\nOs produtos mais comprados pelo cliente %s foram:\n",cliente);
+    if(produtos) {
+        printf("Produto: %s Unidades: %d\n",produtos->codigo,m1);
+        produtos = produtos->ant;
+    }
+    if(produtos) {
+        printf("Produto: %s Unidades: %d\n",produtos->codigo,m2);
+        produtos = produtos->ant;
+    }
+    if(produtos) {
+        printf("Produto: %s Unidades: %d\n",produtos->codigo,m3);
     }
     
     c=getchar();
