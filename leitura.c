@@ -442,6 +442,7 @@ void query11(){
 	fclose(file);
 }
 
+<<<<<<< HEAD
 void query12() {
     char s;
     int n,nc,i;
@@ -524,6 +525,47 @@ void query14() {
     
     c=getchar();
     c=getchar();
+=======
+void query14(){
+	int i, prod = 0, flag = 0, totalc = 0;
+	ListaLigada aux = NULL, prods = NULL, clien = NULL;
+
+	imprimeNumQuery(14);
+
+	for(i = 0; i < 26; i++){
+		aux = NULL;
+		aux = produtosParaLista(aux, produtos[i]);
+		prods = juntaListas(prods, aux);
+		aux = NULL;
+		aux = clientesParaLista(aux, clientes[i]);
+		clien = juntaListas(clien, aux);
+	}
+	/* prods contem todos os produtos numa lista ligada */
+	/* clien contem todos os clientes numa lista ligada */
+
+	aux = clien;
+	while(aux){
+		for(i=0; i < 12; i++){
+			if(!existeCliente(compras[i], aux->codigo)) flag++;
+		}
+		if(flag == 12) totalc++;
+		flag = 0;
+		aux = aux->prox;
+	}
+
+	printf("Total de clientes que nao compraram: %d\n", totalc);
+	/*
+	aux = prods;
+	while(aux){
+		for(i=0; i < 12; i++){
+			if(existeElemento(prods,aux->codigo) && existeProduto(compras[i], aux->codigo)) prods = removeElemento(prods, aux->codigo);
+		}
+		aux = aux->prox;
+	}
+	*/
+	//printf("Numero de produtos que ninguem comprou: %d\n",comprimentoListaLigada(prods));
+
+>>>>>>> 3f10a35602cd86fe9051aae1dab7ad0ab20e4491
 }
 
 int main (){
@@ -583,6 +625,7 @@ int main (){
 
                 case 11: {
                     if(lido) query11();
+<<<<<<< HEAD
                 } break;
                 
                 case 12: {
@@ -596,6 +639,13 @@ int main (){
                 case 14: {
                     if(lido) query14();
                 } break;
+=======
+                }
+
+                case 14: {
+                    if(lido) query14();
+                }
+>>>>>>> 3f10a35602cd86fe9051aae1dab7ad0ab20e4491
     	}
 	
     }

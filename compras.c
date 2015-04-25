@@ -360,6 +360,7 @@ int contaComprasMes(Compras c){
     return comprimentoListaCompras(c->lista) + contaComprasMes(c->esq) + contaComprasMes(c->dir);
 }
 
+<<<<<<< HEAD
 /**
  * Dada uma lista de compras, diz quais são o 3 produtos mais comprados
  * Lista de compras nao tem repetidos, e tem o somatorio das quantidades
@@ -428,6 +429,34 @@ ListaLigada tresProdutosMaisComprados(ListaCompras l, ListaLigada p, int *max1, 
     }
     free(produto);
     return p;
+=======
+int existeCliente(Compras c, char *p){
+    int res = 0;
+
+    if(c != NULL){
+        if(strcmp(c->cliente,p) == 0) res = 1;
+        else {
+            if(!res) res = existeCliente(c->esq, p);
+            if(!res) res = existeCliente(c->dir, p);
+        }
+    }
+    return res;
+}
+
+int existeProduto(Compras c, char *p){
+    int res = 0;
+ 
+    if(c!=NULL){
+        if(clienteComprouProduto(c->lista,p)) {
+            return 1;
+        }
+        if(!res) {
+            res = existeProduto(c->esq,p);
+            if(!res) res = existeProduto(c->dir,p);
+        }
+    }
+    return res;
+>>>>>>> 3f10a35602cd86fe9051aae1dab7ad0ab20e4491
 }
 
 /*************

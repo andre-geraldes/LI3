@@ -126,6 +126,20 @@ ListaLigada interseccaoListas(ListaLigada a, ListaLigada b){
     return result;
 }
 
+ListaLigada juntaListas(ListaLigada res, ListaLigada a){
+    ListaLigada aux = res;
+    
+    if(res){
+        while(aux->prox){
+            aux = aux->prox;
+        }
+        aux->prox = a;
+    }
+    else res = a;
+
+    return res;
+}
+
 /**
  * Dadas 2 listas ligadas concatena-as
  * @param a
