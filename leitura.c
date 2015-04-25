@@ -350,14 +350,16 @@ void query8() {
 	puts("Código inválido, insira outra vez:");
 	scanf("%s",codigo);
     }
-    time(&t1); /* Carrega tempo actual */
+    t1 = time(NULL); /* Carrega tempo actual */
     for(i = 0; i < 12; i++){
         caux = compras[i];
     	clientesN = listaClientesCompraramProduto(caux,clientesN,'N',codigo);
         clientesP = listaClientesCompraramProduto(caux,clientesP,'P',codigo);
     }
-    time(&t2); /* Carrega tempo actual */
+    t2 = time(NULL); /* Carrega tempo actual */
+    puts(">>>>>MODO NORMAL<<<<<");
     imprimeLista(clientesN);
+    puts(">>>>>MODO PROMOÇAO<<<<<");
     imprimeLista(clientesP);
     
     printf("O programa executou em %f segundos.\n",difftime(t2,t1));
@@ -388,14 +390,14 @@ void query9() {
 	scanf("%d",&mes);
     }
     
-    time(&t1);
+    t1 = time(NULL);
     
     lc = devolveListaComprasCliente(compras[mes-1],lc,codigo); 
     lcsr = juntaComprasPorProduto(lcsr,lc); 
     lco = insereComprasOrdenadas(lco,lcsr);    
     produtos = listaLigadaDeCompras(lco,produtos); 
     
-    time(&t2);
+    t2 = time(NULL);
     
     imprimeLista(produtos);
     printf("O programa executou em %f segundos.\n",difftime(t2,t1));
@@ -555,8 +557,9 @@ void query14(){
 		}
 		aux = aux->prox;
 	}
+
+	printf("Numero de produtos que ninguem comprou: %d\n",comprimentoListaLigada(prods));
 	*/
-	//printf("Numero de produtos que ninguem comprou: %d\n",comprimentoListaLigada(prods));
 
 
 }
