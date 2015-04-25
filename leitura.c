@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 #include "clientes.h"
 #include "produtos.h"
 #include "listaligada.h"
@@ -336,9 +337,10 @@ void query7() {
 
 void query8() {
     int i;
-    char codigo[7];
+    char codigo[7],c;
     ListaLigada clientesN = NULL, clientesP = NULL;
     Compras caux;
+    time_t t1,t2;
     
     imprimeNumQuery(8);
     
@@ -348,21 +350,28 @@ void query8() {
 	puts("Código inválido, insira outra vez:");
 	scanf("%s",codigo);
     }
-    
+    time(&t1); /* Carrega tempo actual */
     for(i = 0; i < 12; i++){
         caux = compras[i];
     	clientesN = listaClientesCompraramProduto(caux,clientesN,'N',codigo);
         clientesP = listaClientesCompraramProduto(caux,clientesP,'P',codigo);
     }
+    time(&t2); /* Carrega tempo actual */
     imprimeLista(clientesN);
     imprimeLista(clientesP);
+    
+    printf("O programa executou em %f segundos.\n",difftime(t2,t1));
+    c = getchar();
+    c = getchar();
+    
 }
 
 void query9() {
-    char codigo[6];
+    char codigo[6],c;
     int mes;
     ListaLigada produtos = NULL;
     ListaCompras lc=NULL,lcsr=NULL,lco=NULL;
+    time_t t1,t2;
     
     imprimeNumQuery(9);
     
@@ -378,44 +387,45 @@ void query9() {
         puts("Mês inválido, insira outra vez:");
 	scanf("%d",&mes);
     }
-   
+    
+    time(&t1);
+    
     lc = devolveListaComprasCliente(compras[mes-1],lc,codigo); 
     lcsr = juntaComprasPorProduto(lcsr,lc); 
     lco = insereComprasOrdenadas(lco,lcsr);    
     produtos = listaLigadaDeCompras(lco,produtos); 
     
+    time(&t2);
+    
     imprimeLista(produtos);
+    printf("O programa executou em %f segundos.\n",difftime(t2,t1));
+    c = getchar();
+    c = getchar();
 }
 
 void query10(){
 	int i;
-	ListaLigada clientes = NULL, aux = NULL, h = NULL;
-	imprimeNumQuery(10);
+	ListaLigada clientes[12];
+        ListaLigada res[12];
+        
+        imprimeNumQuery(10);
 
-	/*
-	clientes = comprasDoClientesParaLista(clientes, compras[0]);
-	for(i = 1; i < 12; i++){
-		aux = comprasDoClientesParaLista(aux, compras[i]);
-		h = clientes;
-		while(h){
-			if(!existeElemento(aux,h->codigo)) {
-				clientes = removeElemento(clientes,h->codigo);
-			}
-			h = h->prox;
-		}
-	}
-	*/
-
-	h = comprasDoClientesParaLista(clientes, compras[0]);
-	aux = comprasDoClientesParaLista(clientes, compras[1]);
-	clientes = interseccaoListas(h,aux);
-	for(i=2; i<12; i++){
-		aux = comprasDoClientesParaLista(clientes, compras[i]);
-		clientes = interseccaoListas(clientes,aux);
-	}
-
-	imprimeLista(clientes);
-
+        for(i=0;i<12;i++) {
+            clientes[i] = NULL;
+            res[i] = NULL;
+        }
+        
+        for(i=0;i<12;i++) {
+            /* Clientes em lista dos 12 meses */
+            clientes[i] = comprasDosClientesParaLista(clientes[i],compras[i]);
+        }
+        
+        res[0] = interseccaoListas(clientes[0],clientes[1]);
+        for(i=1;i<11;i++) {
+            res[i] = interseccaoListas(res[i-1],clientes[i+1]);
+        }
+        
+        imprimeListaInversa(res[10]);
 }
 
 void query11(){
@@ -430,6 +440,84 @@ void query11(){
 		if(i != 11) fprintf(file, "\n");
 	}
 	fclose(file);
+}
+
+void query12() {
+    char s;
+    int n,nc,i;
+    Contabilidade ct = NULL;
+    Compras cp = NULL;
+    time_t t1,t2;
+    
+    imprimeNumQuery(12);
+    
+    puts("Indique quantos produtos quer ver:");
+    scanf("%d",&n);
+    
+    for(i=0;i<12;i++) {
+        
+    }
+   
+    s=getchar();
+    s=getchar();
+}
+
+void query13() {
+    char c,cliente[6];
+    ListaCompras lista[12],res[12],aux=NULL;
+    ListaLigada produtos=NULL;
+    int i,m1,m2,m3;
+    
+    imprimeNumQuery(13);
+    
+    for(i=0;i<12;i++) {
+        lista[i] = NULL;
+        res[i] = NULL;
+    }
+    
+    puts("Insira o código do cliente:");
+    scanf("%s",cliente);
+    while(!existeC(clientes[cliente[0]-'A'], cliente)){
+	puts("Cliente inválido, insira outra vez:");
+	scanf("%s",cliente);
+    }
+    
+    /* Listas de compras do cliente para cada mes */
+    for(i=0;i<12;i++) {
+        lista[i] = devolveListaComprasCliente(compras[i],lista[i],cliente);
+    }
+    /* */
+    res[0] = juntaComprasPorProduto(lista[0],lista[1]);
+    for(i=1;i<11;i++) {
+            res[i] = juntaComprasPorProduto(res[i-1],lista[i+1]);
+    }
+    aux = res[10];
+    
+    while(aux) {
+        printf("P: %s Q: %d\n",aux->produto,aux->quantidade);
+        aux = aux->prox;
+    }
+    
+    puts("ok");
+    produtos = tresProdutosMaisComprados(aux,produtos,&m1,&m2,&m3);
+    
+    printf("Os produtos mais comprados pelo cliente %s foram:\n",cliente);
+    while(produtos) {
+        printf("Produto: %s\n",produtos->codigo);
+        produtos = produtos->prox;
+    }
+    
+    c=getchar();
+    c=getchar();
+}
+
+
+void query14() {
+    char c;
+    imprimeNumQuery(14);
+    
+    c=getchar();
+    c=getchar();
 }
 
 int main (){
@@ -462,7 +550,7 @@ int main (){
 		case 4: {
                     if(lido) query4();
                 } break;
-                /* OPção de guardar em ficheiro */
+                
                 case 5: {
                     if(lido) query5();
                 } break;
@@ -481,15 +569,27 @@ int main (){
                 
                 case 9: {
                     if(lido) query9();
-                }
+                } break;
 
                 case 10: {
                     if(lido) query10();
-                }
+                } break;
 
                 case 11: {
                     if(lido) query11();
-                }
+                } break;
+                
+                case 12: {
+                    if(lido) query12();
+                } break;
+                
+                case 13: {
+                    if(lido) query13();
+                } break;
+                
+                case 14: {
+                    if(lido) query14();
+                } break;
     	}
 	
     }

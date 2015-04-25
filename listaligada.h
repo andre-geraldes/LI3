@@ -30,4 +30,6 @@ ListaLigada removeElemento(ListaLigada l, char *c);
 
 ListaLigada interseccaoListas(ListaLigada a, ListaLigada b);
 
+ListaLigada concatenaListas(ListaLigada a, ListaLigada b);
+
 #endif

@@ -201,6 +201,41 @@ ListaCompras juntaComprasPorProduto(ListaCompras res, ListaCompras l) {
 }
 
 /**
+ * Junta comrpas por produto (alternativa). Difere na anterior no return.
+ * @param res
+ * @param l
+ * @return 
+ */
+ListaCompras juntaComprasPorProduto2(ListaCompras a, ListaCompras b) {
+    ListaCompras aux=NULL, resultado=NULL;
+    
+    if(a==NULL) {
+        resultado = b;
+    } else if(b==NULL) {
+        resultado = a;
+    } else {
+        aux = a;
+        /* vamos percorrer a exaustivamente */
+        while(aux != NULL) {
+            if(clienteComprouProduto(b,aux->produto)){
+                /* se já existe o produto,actualiza a quantidade*/
+                if(resultado == NULL) {
+                    resultado = insereElemListaCompras(resultado,aux->produto,aux->modo,aux->preco,aux->quantidade);
+                } else {
+                    resultado = actualizaListaCompras(resultado,aux->quantidade,aux->produto);
+                }
+            } else {
+                /* se não tem o produto ainda, adiciona-o à lista */
+                resultado = insereElemListaCompras(resultado,aux->produto,aux->modo,aux->preco,aux->quantidade);
+            }
+            aux = aux->prox;
+        }
+    }
+    
+    return resultado;
+}
+
+/**
  * Recece uma lista de compras sem produtos repetidos e insere-os numa nova lista
  * de ficando ordenados de forma decrescente tendo em conta a quantidade
  * @param l
@@ -295,23 +330,87 @@ ListaCompras devolveListaComprasCliente(Compras c, ListaCompras aux, char *cl) {
     return aux;
 }
 
-ListaLigada comprasDoClientesParaLista(ListaLigada l, Compras c) {
+ListaLigada comprasDosClientesParaLista(ListaLigada l, Compras c) {
     if(c!=NULL) {
-        l = comprasDoClientesParaLista(l,c->dir);
+        l = comprasDosClientesParaLista(l,c->dir);
         l = insereElemento(l,c->cliente);
-        l = comprasDoClientesParaLista(l,c->esq);
+        l = comprasDosClientesParaLista(l,c->esq);
     }
     return l;
 }
 
+/**
+ * Conta os clientes que compram num determinado mes
+ * @param c
+ * @return 
+ */
 int contaClientes(Compras c){
     if(c == NULL) return 0;
     return 1 + contaClientes(c->esq) + contaClientes(c->dir);
 }
 
+/**
+ * Dado um mes, calcula quantas compras foram feitas
+ * NOTA: compras != vendas
+ * @param c
+ * @return 
+ */
 int contaComprasMes(Compras c){
     if(c == NULL) return 0;
     return comprimentoListaCompras(c->lista) + contaComprasMes(c->esq) + contaComprasMes(c->dir);
+}
+
+/**
+ * Dada uma lista de compras, diz quais são o 3 produtos mais comprados
+ * Lista de compras nao tem repetidos, e tem o somatorio das quantidades
+ * Pouco eficiente, faz 3 travessias
+ * Inserção na lista de forma inversa
+ * @param 
+ */
+ListaLigada tresProdutosMaisComprados(ListaCompras l, ListaLigada p, int *max1, int *max2, int *max3){
+    int i,m1,m2,m3;
+    char *produto = (char *) malloc(sizeof());
+    ListaCompras laux;
+    
+    for(i=0;i<3;i++){
+        laux = l;
+        if(i==0) {
+            /* primeiro maximo */
+            m1 = 0;
+            while(laux) {
+                if(laux->quantidade > m1) {
+                    m1 = laux->quantidade;
+                    produto = strdup(laux->produto);
+                }
+                laux = laux->prox;
+            }
+            p = insereElemento(p,produto);
+        } else if(i==1) {
+            /* segundo maximo */
+            m2 = 0;
+            while(laux) {
+                if(laux->quantidade > m2 && !existeElemento(p,laux->produto)) {
+                    m2 = laux->quantidade;
+                    produto = strdup(laux->produto);                
+                }
+                laux = laux->prox;
+            }
+            p = insereElemento(p,produto);
+            
+        } else {
+            /* terceiro maximo */
+            m3 = 0;
+            while(laux) {
+                if(laux->quantidade > m3 && !existeElemento(p,laux->produto)) {
+                    m3 = laux->quantidade;
+                    produto = strdup(laux->produto);
+                }
+                laux = laux->prox;
+            }
+            p = insereElemento(p,produto);
+        }
+    }
+    return p;
 }
 
 /*************

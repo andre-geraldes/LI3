@@ -36,7 +36,9 @@ int clienteComprouProdutoModo(ListaCompras l,char *p, char m);
 
 ListaLigada listaClientesCompraramProduto(Compras c, ListaLigada l, char m, char *p);
 
-ListaCompras juntaComprasPorProduto(ListaCompras l, ListaCompras res);
+ListaCompras juntaComprasPorProduto(ListaCompras res, ListaCompras l);
+
+ListaCompras juntaComprasPorProduto2(ListaCompras res, ListaCompras l);
 
 ListaCompras actualizaListaCompras(ListaCompras l, int q, char *p);
 
@@ -46,11 +48,13 @@ ListaLigada listaLigadaDeCompras(ListaCompras l, ListaLigada r);
 
 ListaCompras devolveListaComprasCliente(Compras c, ListaCompras l, char *cl);
 
-ListaLigada comprasDoClientesParaLista(ListaLigada l, Compras c);
+ListaLigada comprasDosClientesParaLista(ListaLigada l, Compras c);
 
 int contaComprasMes(Compras c);
 
 int contaClientes(Compras c);
+
+ListaLigada tresProdutosMaisComprados(ListaCompras l, ListaLigada p, int *m1, int *m2, int *m3);
 
 /* Gestão da AVL */
 

@@ -59,9 +59,16 @@ ListaLigada insereElemNaoRepetido(ListaLigada l, char *c) {
     return l;
 }
 
+/**
+ * Verifica se existe um determinado elemento da lista ligada
+ * @param l
+ * @param c
+ * @return 
+ */
 int existeElemento(ListaLigada l, char *c){
     int res = 0;
     ListaLigada aux = l;
+    
     while(!res && aux){
         if(strcmp(aux->codigo,c) == 0) res = 1;
         aux = aux->prox;
@@ -100,15 +107,44 @@ ListaLigada removeElemento(ListaLigada l, char *c){
     return l;
 }
 
+/**
+ * Faz a intersecção de 2 listas ligadas (comuns)
+ * @param a
+ * @param b
+ * @return 
+ */
 ListaLigada interseccaoListas(ListaLigada a, ListaLigada b){
     ListaLigada result = NULL, aux = a;
 
     while(aux){
-        if(existeElemento(b,aux->codigo)) result = insereElemento(result,aux->codigo);
+        if(existeElemento(b,aux->codigo)) {
+            result = insereElemento(result,aux->codigo);
+        }
         aux = aux->prox;
     }
 
     return result;
+}
+
+/**
+ * Dadas 2 listas ligadas concatena-as
+ * @param a
+ * @param b
+ * @return 
+ */
+ListaLigada concatenaListas(ListaLigada a, ListaLigada b) {
+    ListaLigada res = NULL;
+    
+    if(a==NULL) {
+        res = b;
+    } else {
+        res = a;
+        while(a->prox != NULL) {
+            a = a->prox;
+        }
+        a->prox = b;
+    }
+    return res;
 }
 
 /**

@@ -7,3 +7,5 @@
 int max(int a, int b);
 
 void imprimeLista(ListaLigada ll);
+
+void imprimeListaInversa(ListaLigada ll);
