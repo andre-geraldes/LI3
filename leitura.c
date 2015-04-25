@@ -340,7 +340,8 @@ void query8() {
     char codigo[7],c;
     ListaLigada clientesN = NULL, clientesP = NULL;
     Compras caux;
-    time_t t1,t2;
+   	clock_t begin, end;
+   	double tempo;
     
     imprimeNumQuery(8);
     
@@ -350,17 +351,24 @@ void query8() {
 	puts("Código inválido, insira outra vez:");
 	scanf("%s",codigo);
     }
-    time(&t1); /* Carrega tempo actual */
+
+    begin = clock(); /* Carrega tempo actual */
+
     for(i = 0; i < 12; i++){
         caux = compras[i];
     	clientesN = listaClientesCompraramProduto(caux,clientesN,'N',codigo);
         clientesP = listaClientesCompraramProduto(caux,clientesP,'P',codigo);
     }
-    time(&t2); /* Carrega tempo actual */
+
+    end = clock(); /* Carrega tempo actual */
+    tempo = (double)(end - begin) / CLOCKS_PER_SEC;
+
+    puts(">>>>>MODO NORMAL<<<<<");
     imprimeLista(clientesN);
+    puts(">>>>>MODO PROMOÇAO<<<<<");
     imprimeLista(clientesP);
     
-    printf("O programa executou em %f segundos.\n",difftime(t2,t1));
+    printf("A query executou em %f segundos.\n",tempo);
     c = getchar();
     c = getchar();
     
@@ -371,7 +379,8 @@ void query9() {
     int mes;
     ListaLigada produtos = NULL;
     ListaCompras lc=NULL,lcsr=NULL,lco=NULL;
-    time_t t1,t2;
+    clock_t begin, end;
+   	double tempo;
     
     imprimeNumQuery(9);
     
@@ -388,17 +397,19 @@ void query9() {
 	scanf("%d",&mes);
     }
     
-    time(&t1);
+    begin = clock();
     
     lc = devolveListaComprasCliente(compras[mes-1],lc,codigo); 
     lcsr = juntaComprasPorProduto(lcsr,lc); 
     lco = insereComprasOrdenadas(lco,lcsr);    
     produtos = listaLigadaDeCompras(lco,produtos); 
     
-    time(&t2);
+    end = clock();
+    tempo = (double)(end - begin) / CLOCKS_PER_SEC;
+
     
     imprimeLista(produtos);
-    printf("O programa executou em %f segundos.\n",difftime(t2,t1));
+    printf("A query executou em %f segundos.\n",tempo);
     c = getchar();
     c = getchar();
 }
@@ -448,7 +459,8 @@ void query12() {
     int n,nc,i;
     Contabilidade cg = NULL;
     Compras cp = NULL;
-    time_t t1,t2;
+    clock_t begin, end;
+   	double tempo;
     
     imprimeNumQuery(12);
     
@@ -456,10 +468,17 @@ void query12() {
     scanf("%d",&n);
     
     cg = contabilidadeGlobal(cg,contas[0]);
+
+    begin = clock();
+
+
     for(i=0;i<12;i++) {
         cg = actualizaContabilidadeGlobal(cg,contas[i]);
     }
-   
+
+    end = clock();
+    tempo = (double)(end - begin) / CLOCKS_PER_SEC;
+   printf("A query executou em %f segundos.\n",tempo);
     s=getchar();
     s=getchar();
 }
@@ -521,6 +540,7 @@ void query13() {
 
 
 void query14(){
+
     char c;
     int i,pnc,csc;
     
@@ -549,6 +569,7 @@ void query14(){
     
     c=getchar();
     c=getchar();
+
 }
 
 int main (){
@@ -567,60 +588,75 @@ int main (){
     	printf("Opção: %d\n",num);
     	switch(num){
     		case 1: {
-                    /* Falta o caso de reler */
-                    query1(); 
-                    lido=1; 
-                    break;
-                }    
-		case 2: {
-                    if(lido) query2();
-                } break;        
-		case 3: {
-                    if(lido) query3();
-                } break;
-		case 4: {
-                    if(lido) query4();
-                } break;
+    			if(lido){
+    				for(i = 0; i < 12; i++){
+						contas[i] = NULL;
+						compras[i] = NULL;
+					}
+					for(i = 0; i < 26; i++){
+						clientes[i] = NULL;
+						produtos[i] = NULL;
+					}
+    			}
+                query1(); 
+                lido=1; 
+                break;
+            }    
+			case 2: {
+                if(lido) query2();
+            } break;        
+			case 3: {
+                if(lido) query3();
+            } break;
+			case 4: {
+                if(lido) query4();
+            } break;
                 
-                case 5: {
-                    if(lido) query5();
-                } break;
+            case 5: {
+                if(lido) query5();
+            } break;
                 
-		case 6: {
-                    if(lido) query6();
-                } break;
+			case 6: {
+                if(lido) query6();
+            } break;
                 
-                case 7: {
-                    if(lido) query7();
-                } break;
+            case 7: {
+                if(lido) query7();
+            } break;
                 
-                case 8: {
-                    if(lido) query8();
-                } break;
+            case 8: {
+                if(lido) query8();
+            } break;
                 
-                case 9: {
-                    if(lido) query9();
-                } break;
+            case 9: {
+                if(lido) query9();
+            } break;
 
-                case 10: {
-                    if(lido) query10();
-                } break;
+            case 10: {
+                if(lido) query10();
+            } break;
 
-                case 11: {
-                    if(lido) query11();
-                } break;
+            case 11: {
+                if(lido) query11();
+            } break;
                 
-                case 12: {
-                    if(lido) query12();
-                } break;
+            case 12: {
+                if(lido) query12();
+            } break;
                 
-                case 13: {
-                    if(lido) query13();
-                } break;
+            case 13: {
+                if(lido) query13();
+            } break;
                 
+<<<<<<< HEAD
                 case 14: {
                     if(lido) query14();
                 } break;
+=======
+            case 14: {
+                if(lido) query14();
+            } break;
+>>>>>>> 625a666c64da54a61f345b92e9e72c1d359b37fe
     	}
     }
 
