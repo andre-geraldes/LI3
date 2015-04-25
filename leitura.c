@@ -456,9 +456,9 @@ void query11(){
 
 void query12() {
     char s;
-    int n,nc,i;
+    int n,i;
     Contabilidade cg = NULL;
-    Compras cp = NULL;
+    
     clock_t begin, end;
    	double tempo;
     
@@ -472,10 +472,10 @@ void query12() {
     for(i=0;i<12;i++) {
         cg = actualizaContabilidadeGlobal(cg,contas[i]);
     }
-
+    
     end = clock();
     tempo = (double)(end - begin) / CLOCKS_PER_SEC;
-   printf("A query executou em %f segundos.\n",tempo);
+    printf("A query executou em %f segundos.\n",tempo);
     s=getchar();
     s=getchar();
 }
@@ -561,7 +561,7 @@ void query14(){
     csc = contaNodosC(cl);
     
     
-    printf("\nProutos nao comprados: %d\n",pnc);
+    printf("\nProdutos nao comprados: %d\n",pnc);
     printf("Clientes sem compras: %d\n",csc);
     
     c=getchar();

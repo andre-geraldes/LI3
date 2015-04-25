@@ -208,7 +208,6 @@ void numeroVendasETotalFacturado(Contabilidade c, int *v, double *f) {
     
 }
 
-
 /*************
  Gestão da AVL
  *************/

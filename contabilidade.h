@@ -38,7 +38,6 @@ int produtoFoiComprado(Contabilidade c, char *p);
 
 void numeroVendasETotalFacturado(Contabilidade c, int *v, double *f);
 
-Contabilidade getContabilidade(Contabilidade c);
 
 /* Gestão da AVL */
 
