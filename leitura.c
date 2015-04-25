@@ -577,65 +577,69 @@ int main (){
     	printf("Opção: %d\n",num);
     	switch(num){
     		case 1: {
-                    /* Falta o caso de reler */
-                    query1(); 
-                    lido=1; 
-                    break;
-                }    
-		case 2: {
-                    if(lido) query2();
-                } break;        
-		case 3: {
-                    if(lido) query3();
-                } break;
-		case 4: {
-                    if(lido) query4();
-                } break;
+    			if(lido){
+    				for(i = 0; i < 12; i++){
+						contas[i] = NULL;
+						compras[i] = NULL;
+					}
+					for(i = 0; i < 26; i++){
+						clientes[i] = NULL;
+						produtos[i] = NULL;
+					}
+    			}
+                query1(); 
+                lido=1; 
+                break;
+            }    
+			case 2: {
+                if(lido) query2();
+            } break;        
+			case 3: {
+                if(lido) query3();
+            } break;
+			case 4: {
+                if(lido) query4();
+            } break;
                 
-                case 5: {
-                    if(lido) query5();
-                } break;
+            case 5: {
+                if(lido) query5();
+            } break;
                 
-		case 6: {
-                    if(lido) query6();
-                } break;
+			case 6: {
+                if(lido) query6();
+            } break;
                 
-                case 7: {
-                    if(lido) query7();
-                } break;
+            case 7: {
+                if(lido) query7();
+            } break;
                 
-                case 8: {
-                    if(lido) query8();
-                } break;
+            case 8: {
+                if(lido) query8();
+            } break;
                 
-                case 9: {
-                    if(lido) query9();
-                } break;
+            case 9: {
+                if(lido) query9();
+            } break;
 
-                case 10: {
-                    if(lido) query10();
-                } break;
+            case 10: {
+                if(lido) query10();
+            } break;
 
-                case 11: {
-                    if(lido) query11();
-                } break;
+            case 11: {
+                if(lido) query11();
+            } break;
                 
-                case 12: {
-                    if(lido) query12();
-                } break;
+            case 12: {
+                if(lido) query12();
+            } break;
                 
-                case 13: {
-                    if(lido) query13();
-                } break;
+            case 13: {
+                if(lido) query13();
+            } break;
                 
-                case 14: {
-                    if(lido) query14();
-                } break;
-
-                case 14: {
-                    if(lido) query14();
-                }
-
+            case 14: {
+                if(lido) query14();
+            } break;
     	}
 	
     }

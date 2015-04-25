@@ -429,6 +429,7 @@ ListaLigada tresProdutosMaisComprados(ListaCompras l, ListaLigada p, int *max1, 
     }
     free(produto);
     return p;
+}
 
 int existeCliente(Compras c, char *p){
     int res = 0;
