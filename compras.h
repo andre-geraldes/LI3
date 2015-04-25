@@ -5,6 +5,7 @@
 #include<string.h>
 #include<stdlib.h>
 #include"listaligada.h"
+#include"clientes.h"
 
 typedef struct listaCompras {
     char produto[7];
@@ -60,6 +61,9 @@ int existeProduto(Compras c, char *p);
 
 int existeCliente(Compras c, char *p);
 
+NodoC clientesQueCompraram(NodoC cl, Compras c);
+
+NodoC insereClientesQueCompraramNoMes(NodoC cl, Compras c);
 
 /* Gestão da AVL */
 

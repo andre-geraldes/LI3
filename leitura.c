@@ -446,7 +446,7 @@ void query11(){
 void query12() {
     char s;
     int n,nc,i;
-    Contabilidade ct = NULL;
+    Contabilidade cg = NULL;
     Compras cp = NULL;
     time_t t1,t2;
     
@@ -455,8 +455,9 @@ void query12() {
     puts("Indique quantos produtos quer ver:");
     scanf("%d",&n);
     
+    cg = contabilidadeGlobal(cg,contas[0]);
     for(i=0;i<12;i++) {
-        
+        cg = actualizaContabilidadeGlobal(cg,contas[i]);
     }
    
     s=getchar();
@@ -520,45 +521,34 @@ void query13() {
 
 
 void query14(){
-	int i, prod = 0, flag = 0, totalc = 0;
-	ListaLigada aux = NULL, prods = NULL, clien = NULL;
-
-	imprimeNumQuery(14);
-
-	for(i = 0; i < 26; i++){
-		aux = NULL;
-		aux = produtosParaLista(aux, produtos[i]);
-		prods = juntaListas(prods, aux);
-		aux = NULL;
-		aux = clientesParaLista(aux, clientes[i]);
-		clien = juntaListas(clien, aux);
-	}
-	/* prods contem todos os produtos numa lista ligada */
-	/* clien contem todos os clientes numa lista ligada */
-
-	aux = clien;
-	while(aux){
-		for(i=0; i < 12; i++){
-			if(!existeCliente(compras[i], aux->codigo)) flag++;
-		}
-		if(flag == 12) totalc++;
-		flag = 0;
-		aux = aux->prox;
-	}
-
-	printf("Total de clientes que nao compraram: %d\n", totalc);
-	/*
-	aux = prods;
-	while(aux){
-		for(i=0; i < 12; i++){
-			if(existeElemento(prods,aux->codigo) && existeProduto(compras[i], aux->codigo)) prods = removeElemento(prods, aux->codigo);
-		}
-		aux = aux->prox;
-	}
-	*/
-	//printf("Numero de produtos que ninguem comprou: %d\n",comprimentoListaLigada(prods));
-
-
+    char c;
+    int i,pnc,csc;
+    
+    NodoC cl=NULL;
+    Contabilidade cg=NULL;
+    
+    imprimeNumQuery(14);
+    
+    /*produtos*/
+    /*Cria uma contabilidade global*/
+    cg = contabilidadeGlobal(cg,contas[0]);
+    for(i=0;i<12;i++) {
+        cg = actualizaContabilidadeGlobal(cg,contas[i]);
+    }
+    pnc = contaProdutosNaoComprados(cg);
+    
+    for(i=0;i<12;i++) {
+        cl = clientesQueCompraram(cl,compras[i]);
+    }
+    
+    csc = contaNodosC(cl);
+    
+    
+    printf("\nProutos nao comprados: %d\n",pnc);
+    printf("Clientes sem compras: %d\n",csc);
+    
+    c=getchar();
+    c=getchar();
 }
 
 int main (){
@@ -631,15 +621,8 @@ int main (){
                 case 14: {
                     if(lido) query14();
                 } break;
-
-                case 14: {
-                    if(lido) query14();
-                }
-
     	}
-	
     }
 
-
-	return 0;
+    return 0;
 }

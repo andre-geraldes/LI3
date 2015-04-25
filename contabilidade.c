@@ -89,6 +89,83 @@ Contabilidade actualizaContabilidade(Contabilidade c, char *p, char m, double pr
 }
 
 /**
+ * Alternativa a anterior
+ * @param c
+ * @param n
+ * @return 
+ */
+Contabilidade actualizaContabilidade2(Contabilidade c, Contabilidade n) {
+    if(c!=NULL) {
+        if (strcmp(c->produto,n->produto)==0) {
+                c->normal->ncompras += n->normal->ncompras;
+                c->normal->nvendas += n->normal->nvendas;
+                c->normal->facturado += n->normal->facturado;
+            
+                c->promocao->ncompras += n->promocao->ncompras;
+                c->promocao->nvendas += n->promocao->nvendas;
+                c->promocao->facturado += n->promocao->facturado;  
+            }        
+        } else if (strcmp(c->produto,n->produto)>0) {
+            c->esq = actualizaContabilidade2(c->esq,n);
+        } else if (strcmp(c->produto,n->produto)<0) {
+            c->dir = actualizaContabilidade2(c->dir,n);
+        }
+    
+    return c;
+}
+
+/**
+ * Junta toda a contabilidade numa unica arvore
+ * temos garantias que m != NULL
+ * @param c
+ * @param p
+ * @param m
+ * @param pr
+ * @param q
+ * @return 
+ */
+Contabilidade contabilidadeGlobal(Contabilidade c, Contabilidade m) {
+    if(m!= NULL) {
+        c = inserirContabilidade(c,m->produto);
+        c->esq = contabilidadeGlobal(c->esq,m->esq);
+        c->dir = contabilidadeGlobal(c->dir,m->dir);
+    }
+    return c;
+}
+
+/**
+ * Actualiza contabilidade Global
+ * NOTA: a ordem dos nodos é sempre a mesma
+ * @param c
+ * @param m
+ * @return 
+ */
+Contabilidade actualizaContabilidadeGlobal(Contabilidade c, Contabilidade m) {
+     if(c!= NULL && m!= NULL) {
+        c = actualizaContabilidade2(c,m);
+        c->esq = actualizaContabilidadeGlobal(c->esq,m->esq);
+        c->dir = actualizaContabilidadeGlobal(c->dir,m->dir);
+    }
+    
+    return c;
+}
+
+/**
+ * Conta os produtos nao comprados na contabilidade geral
+ * @param c
+ * @return 
+ */
+int contaProdutosNaoComprados(Contabilidade c) {
+    if(c==NULL) {
+        return 0;
+    } else if((c->normal->nvendas == 0) && (c->promocao->nvendas==0)) {
+        return 1 + contaProdutosNaoComprados(c->esq) + contaProdutosNaoComprados(c->dir);
+    } else {
+        return contaProdutosNaoComprados(c->esq) + contaProdutosNaoComprados(c->dir);
+    }
+}
+
+/**
  * Verifica se um produto foi comprado num determinado mês
  * NOTA: O apontador contabilidade corresponde a um mês
  *       passado como parâmetro
@@ -130,6 +207,7 @@ void numeroVendasETotalFacturado(Contabilidade c, int *v, double *f) {
     }
     
 }
+
 
 /*************
  Gestão da AVL

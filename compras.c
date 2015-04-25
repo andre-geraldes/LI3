@@ -429,6 +429,7 @@ ListaLigada tresProdutosMaisComprados(ListaCompras l, ListaLigada p, int *max1, 
     }
     free(produto);
     return p;
+}
 
 int existeCliente(Compras c, char *p){
     int res = 0;
@@ -458,6 +459,41 @@ int existeProduto(Compras c, char *p){
     return res;
 
 }
+
+/**
+ * Cria uma arvore com os clientes que fizeram compras
+ * @param cl
+ * @param c
+ * @return 
+ */
+NodoC clientesQueCompraram(NodoC cl, Compras c){
+    if(c!=NULL && cl!=NULL) {
+        cl = insertC(cl,c->cliente);
+        cl->esq = clientesQueCompraram(cl->esq,c->esq);
+        cl->dir = clientesQueCompraram(cl->dir,c->dir);
+        
+    }
+    return cl;
+}
+
+/**
+ * Funcao auxiliar para anterior
+ * @param cl
+ * @param c
+ * @return 
+ */
+NodoC insereClientesQueCompraramNoMes(NodoC cl, Compras c) {
+    if(cl!=NULL) {
+        if(!existeC(cl,c->cliente)) {
+            cl = insertC(cl,c->cliente);
+        }
+    } else {
+        cl = insertC(cl,c->cliente);
+    }
+    return cl;
+    
+}
+
 
 /*************
  Gestão da AVL

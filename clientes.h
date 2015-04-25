@@ -28,8 +28,6 @@ NodoC insertC(NodoC nodo, char * valor);
 
 int contaNodosC(NodoC avl);
 
-/* void listarC(NodoC n, int l, int c, char lista[l][c], int *i); */
-
 ListaLigada clientesParaLista(ListaLigada l, NodoC c);
 
 int existeC(NodoC n, char * nom);

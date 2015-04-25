@@ -26,9 +26,19 @@ Contabilidade inserirContabilidade(Contabilidade c, char *p);
 
 Contabilidade actualizaContabilidade(Contabilidade c, char *p, char m, double pr, int q);
 
+Contabilidade actualizaContabilidade2(Contabilidade c, Contabilidade n);
+
+Contabilidade contabilidadeGlobal(Contabilidade c, Contabilidade m);
+
+Contabilidade actualizaContabilidadeGlobal(Contabilidade c, Contabilidade m);
+
+int contaProdutosNaoComprados(Contabilidade c);
+
 int produtoFoiComprado(Contabilidade c, char *p);
 
 void numeroVendasETotalFacturado(Contabilidade c, int *v, double *f);
+
+Contabilidade getContabilidade(Contabilidade c);
 
 /* Gestão da AVL */
 
