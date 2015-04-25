@@ -314,6 +314,34 @@ int contaComprasMes(Compras c){
     return comprimentoListaCompras(c->lista) + contaComprasMes(c->esq) + contaComprasMes(c->dir);
 }
 
+int existeCliente(Compras c, char *p){
+    int res = 0;
+
+    if(c != NULL){
+        if(strcmp(c->cliente,p) == 0) res = 1;
+        else {
+            if(!res) res = existeCliente(c->esq, p);
+            if(!res) res = existeCliente(c->dir, p);
+        }
+    }
+    return res;
+}
+
+int existeProduto(Compras c, char *p){
+    int res = 0;
+ 
+    if(c!=NULL){
+        if(clienteComprouProduto(c->lista,p)) {
+            return 1;
+        }
+        if(!res) {
+            res = existeProduto(c->esq,p);
+            if(!res) res = existeProduto(c->dir,p);
+        }
+    }
+    return res;
+}
+
 /*************
  Gestão da AVL
  *************/

@@ -432,6 +432,47 @@ void query11(){
 	fclose(file);
 }
 
+void query14(){
+	int i, prod = 0, flag = 0, totalc = 0;
+	ListaLigada aux = NULL, prods = NULL, clien = NULL;
+
+	imprimeNumQuery(14);
+
+	for(i = 0; i < 26; i++){
+		aux = NULL;
+		aux = produtosParaLista(aux, produtos[i]);
+		prods = juntaListas(prods, aux);
+		aux = NULL;
+		aux = clientesParaLista(aux, clientes[i]);
+		clien = juntaListas(clien, aux);
+	}
+	/* prods contem todos os produtos numa lista ligada */
+	/* clien contem todos os clientes numa lista ligada */
+
+	aux = clien;
+	while(aux){
+		for(i=0; i < 12; i++){
+			if(!existeCliente(compras[i], aux->codigo)) flag++;
+		}
+		if(flag == 12) totalc++;
+		flag = 0;
+		aux = aux->prox;
+	}
+
+	printf("Total de clientes que nao compraram: %d\n", totalc);
+	/*
+	aux = prods;
+	while(aux){
+		for(i=0; i < 12; i++){
+			if(existeElemento(prods,aux->codigo) && existeProduto(compras[i], aux->codigo)) prods = removeElemento(prods, aux->codigo);
+		}
+		aux = aux->prox;
+	}
+	*/
+	//printf("Numero de produtos que ninguem comprou: %d\n",comprimentoListaLigada(prods));
+
+}
+
 int main (){
 	int i, num = 1, lido=0;
 	
@@ -489,6 +530,10 @@ int main (){
 
                 case 11: {
                     if(lido) query11();
+                }
+
+                case 14: {
+                    if(lido) query14();
                 }
     	}
 	

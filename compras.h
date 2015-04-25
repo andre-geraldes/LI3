@@ -52,6 +52,10 @@ int contaComprasMes(Compras c);
 
 int contaClientes(Compras c);
 
+int existeProduto(Compras c, char *p);
+
+int existeCliente(Compras c, char *p);
+
 /* Gestão da AVL */
 
 int alturaCP(Compras nodo);
