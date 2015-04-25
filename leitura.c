@@ -340,7 +340,8 @@ void query8() {
     char codigo[7],c;
     ListaLigada clientesN = NULL, clientesP = NULL;
     Compras caux;
-    time_t t1,t2;
+   	clock_t begin, end;
+   	double tempo;
     
     imprimeNumQuery(8);
     
@@ -350,19 +351,24 @@ void query8() {
 	puts("Código inválido, insira outra vez:");
 	scanf("%s",codigo);
     }
-    t1 = time(NULL); /* Carrega tempo actual */
+
+    begin = clock(); /* Carrega tempo actual */
+
     for(i = 0; i < 12; i++){
         caux = compras[i];
     	clientesN = listaClientesCompraramProduto(caux,clientesN,'N',codigo);
         clientesP = listaClientesCompraramProduto(caux,clientesP,'P',codigo);
     }
-    t2 = time(NULL); /* Carrega tempo actual */
+
+    end = clock(); /* Carrega tempo actual */
+    tempo = (double)(end - begin) / CLOCKS_PER_SEC;
+
     puts(">>>>>MODO NORMAL<<<<<");
     imprimeLista(clientesN);
     puts(">>>>>MODO PROMOÇAO<<<<<");
     imprimeLista(clientesP);
     
-    printf("O programa executou em %f segundos.\n",difftime(t2,t1));
+    printf("A query executou em %f segundos.\n",tempo);
     c = getchar();
     c = getchar();
     
@@ -373,7 +379,8 @@ void query9() {
     int mes;
     ListaLigada produtos = NULL;
     ListaCompras lc=NULL,lcsr=NULL,lco=NULL;
-    time_t t1,t2;
+    clock_t begin, end;
+   	double tempo;
     
     imprimeNumQuery(9);
     
@@ -390,17 +397,19 @@ void query9() {
 	scanf("%d",&mes);
     }
     
-    t1 = time(NULL);
+    begin = clock();
     
     lc = devolveListaComprasCliente(compras[mes-1],lc,codigo); 
     lcsr = juntaComprasPorProduto(lcsr,lc); 
     lco = insereComprasOrdenadas(lco,lcsr);    
     produtos = listaLigadaDeCompras(lco,produtos); 
     
-    t2 = time(NULL);
+    end = clock();
+    tempo = (double)(end - begin) / CLOCKS_PER_SEC;
+
     
     imprimeLista(produtos);
-    printf("O programa executou em %f segundos.\n",difftime(t2,t1));
+    printf("A query executou em %f segundos.\n",tempo);
     c = getchar();
     c = getchar();
 }
@@ -450,17 +459,23 @@ void query12() {
     int n,nc,i;
     Contabilidade ct = NULL;
     Compras cp = NULL;
-    time_t t1,t2;
+    clock_t begin, end;
+   	double tempo;
     
     imprimeNumQuery(12);
     
     puts("Indique quantos produtos quer ver:");
     scanf("%d",&n);
     
+    begin = clock();
+
     for(i=0;i<12;i++) {
         
     }
-   
+
+    end = clock();
+    tempo = (double)(end - begin) / CLOCKS_PER_SEC;
+   	printf("A query executou em %f segundos.\n",tempo);
     s=getchar();
     s=getchar();
 }
