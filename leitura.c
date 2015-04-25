@@ -466,12 +466,9 @@ void query12() {
     
     puts("Indique quantos produtos quer ver:");
     scanf("%d",&n);
+    begin = clock();
     
     cg = contabilidadeGlobal(cg,contas[0]);
-
-    begin = clock();
-
-
     for(i=0;i<12;i++) {
         cg = actualizaContabilidadeGlobal(cg,contas[i]);
     }
@@ -647,16 +644,10 @@ int main (){
             case 13: {
                 if(lido) query13();
             } break;
-                
-<<<<<<< HEAD
-                case 14: {
-                    if(lido) query14();
-                } break;
-=======
+              
             case 14: {
                 if(lido) query14();
             } break;
->>>>>>> 625a666c64da54a61f345b92e9e72c1d359b37fe
     	}
     }
 
