@@ -126,6 +126,12 @@ ListaLigada interseccaoListas(ListaLigada a, ListaLigada b){
     return result;
 }
 
+/**
+ * Junta 2 listas
+ * @param a
+ * @param b
+ * @return 
+ */
 ListaLigada juntaListas(ListaLigada res, ListaLigada a){
     ListaLigada aux = res;
     
