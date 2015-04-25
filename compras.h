@@ -54,13 +54,12 @@ int contaComprasMes(Compras c);
 
 int contaClientes(Compras c);
 
-<<<<<<< HEAD
 ListaLigada tresProdutosMaisComprados(ListaCompras l, ListaLigada p, int *m1, int *m2, int *m3);
-=======
+
 int existeProduto(Compras c, char *p);
 
 int existeCliente(Compras c, char *p);
->>>>>>> 3f10a35602cd86fe9051aae1dab7ad0ab20e4491
+
 
 /* Gestão da AVL */
 

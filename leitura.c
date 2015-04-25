@@ -442,7 +442,7 @@ void query11(){
 	fclose(file);
 }
 
-<<<<<<< HEAD
+
 void query12() {
     char s;
     int n,nc,i;
@@ -519,13 +519,6 @@ void query13() {
 }
 
 
-void query14() {
-    char c;
-    imprimeNumQuery(14);
-    
-    c=getchar();
-    c=getchar();
-=======
 void query14(){
 	int i, prod = 0, flag = 0, totalc = 0;
 	ListaLigada aux = NULL, prods = NULL, clien = NULL;
@@ -565,7 +558,7 @@ void query14(){
 	*/
 	//printf("Numero de produtos que ninguem comprou: %d\n",comprimentoListaLigada(prods));
 
->>>>>>> 3f10a35602cd86fe9051aae1dab7ad0ab20e4491
+
 }
 
 int main (){
@@ -625,7 +618,6 @@ int main (){
 
                 case 11: {
                     if(lido) query11();
-<<<<<<< HEAD
                 } break;
                 
                 case 12: {
@@ -639,13 +631,11 @@ int main (){
                 case 14: {
                     if(lido) query14();
                 } break;
-=======
-                }
 
                 case 14: {
                     if(lido) query14();
                 }
->>>>>>> 3f10a35602cd86fe9051aae1dab7ad0ab20e4491
+
     	}
 	
     }
